@@ -5,7 +5,7 @@
 
 [Головлев Гордей](https://github.com/after10pm) - Тимлид, back-end разработчик
 
-[Гвоздев Даниил](https://github.com/StudentDaniil) - Back-end разработчик, front-end разработчик
+[Гвоздев Даниил](https://github.com/StudentDaniil) - Back-end разработчик, front-end разработчик, проектировщик системы
 
 [Шарафиева Полина](https://github.com/polinkaaaa) - Тестировщик, технический писатель
 
