@@ -1,0 +1,113 @@
+
+.mainblock {
+
+    position: absolute;
+    top: 145px;
+    left: 178px;
+    width: 1621px;
+    height: 750px;
+    border-radius: 50px;
+    background-color: #FFFFFF;
+    color: #807EFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-s {
+    position: absolute;
+    top: 145px;
+    left: 800px;
+
+    width: 455px;
+    height: 79px;
+
+    color: #807EFF;
+    font-weight: 800;
+    font-family: Montserrat, sans-serif;
+    font-style: italic;
+    font-size: 65px;
+    line-height: 79px;
+}
+.text1{
+
+    position: absolute;
+    width: 542px;
+    height: 46px;
+    left: 800px;
+    top: 286px;
+
+    font-family: "NT SOM", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 52px;
+    display: flex;
+    align-items: center;
+
+    color: #555555;
+
+
+}
+.text2{
+    position: absolute;
+    width: 602px;
+    height: 109px;
+    left: 800px;
+    top: 360px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 31px;
+
+    color: #000000;
+
+
+}
+.regs{
+
+    position: absolute;
+    width: 185px;
+    height: 45px;
+    left: 1230px;
+    top: 590px;
+
+    background: #807EFF;
+    border-radius: 22.5px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+
+
+}
+.elipse1{
+
+    position: absolute;
+    width: 23px;
+    height: 23px;
+    left: 805px;
+    top: 600px;
+    border-radius: 50%;
+
+    background: #807EFF;
+
+}
+.elipse2{
+
+    position: absolute;
+    width: 23px;
+    height: 23px;
+    left: 850px;
+    top: 600px;
+    border-radius: 50%;
+
+    background: #D9D9D9;
+
+}

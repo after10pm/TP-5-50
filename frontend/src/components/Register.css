@@ -1,0 +1,74 @@
+.body-reg{
+
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+
+    background: #807EFF;
+
+}
+.menu-reg{
+    position: absolute;
+    width: 600px;
+    height: 800px;
+    left: 657px;
+    top: 81px;
+
+    background: #FFFFFF;
+    border-radius: 57px;
+
+}
+.text-brand{
+
+    position: absolute;
+    width: 417px;
+    height: 73px;
+    left: 767px;
+    top: 131px;
+
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 800;
+    font-size: 59.6452px;
+    line-height: 73px;
+
+    color: #807EFF;
+
+
+}
+.text-reg{
+    position: absolute;
+    width: 262px;
+    height: 45px;
+    left: 829px;
+    top: 231px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 52px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #555555;
+
+
+}
+.text-form{
+
+    position: absolute;
+    width: 466px;
+    height: 66px;
+    left: 727px;
+    top: 303px;
+    background: #F4F4F4;
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    color: #9E9E9E;
+    border-radius: 74px;
+
+}
