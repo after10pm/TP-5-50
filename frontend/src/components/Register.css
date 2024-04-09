@@ -2,7 +2,7 @@
 
     position: relative;
     width: 1920px;
-    height: 1080px;
+    height: 953px;
 
     background: #807EFF;
 
@@ -10,7 +10,7 @@
 .menu-reg{
     position: absolute;
     width: 600px;
-    height: 800px;
+    height: 855px;
     left: 657px;
     top: 81px;
 
@@ -70,5 +70,127 @@
     font-size: 20px;
     color: #9E9E9E;
     border-radius: 74px;
+    border: none
+
+}
+.text-form::placeholder {
+    color: #9E9E9E; /* Цвет текста placeholder */
+    text-align: left; /* Выравнивание текста по центру */
+    padding-left: 45px; /* Отступ слева */
+}
+.rec{
+
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    left: 1150px;
+    top: 498px;
+    border-radius: 50%;
+
+    background: #E1E1E1;
+
+}
+.button-registr{
+
+    position: absolute;
+    width: 352px;
+    height: 66px;
+    left: 783px;
+    top: 823px;
+
+    background: #807EFF;
+    border-radius: 74px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+
+
+}
+.mark-reg{
+    /* Rectangle 14 */
+
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 29px;
+    height: 29px;
+    left: 740px;
+    top: 760px;
+
+    border: 1px solid #9E9E9E;
+    border-radius: 4px;
+
+}
+.mark-reg-2{
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    left: 742px;
+    top: 763px;
+
+    background: #807EFF;
+    border-radius: 3px;
+
+}
+.text-conf{
+
+    position: absolute;
+    width: 357px;
+    height: 66px;
+    left: 790px;
+    top: 740px;
+
+    font-family: 'NT Somic';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+
+    color: #9E9E9E;
+
+
+}
+.text-in{
+
+    position: absolute;
+    width: 606px;
+    height: 43px;
+    left: 878px;
+    top: 890px;
+
+    font-family: 'NT Somic';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #9E9E9E;
+
+
+}
+.check-mark{
+
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 1157px;
+    top: 502px;
+    border: 2px solid #9E9E9E;
+    transform: rotate(-45deg);
+    border-top: none;
+    border-right: none;
 
 }

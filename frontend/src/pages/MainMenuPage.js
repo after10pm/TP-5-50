@@ -7,11 +7,13 @@ import {BrowserRouter} from "react-router-dom";
 function MainMenuPage() {
     {
         return (
-            <div>
+
+                <div>
                 <MainPage/>
                 <MainMenu/>
                 <Fotter/>
             </div>
+
 
 
         );

@@ -1,0 +1,25 @@
+.imgfs{
+
+    position: absolute;
+    width: 27px;
+    height: 27px;
+    left: 1690px;
+    top: 23px;
+
+    background: url(https://i.ibb.co/bWtW9sD/b25eb0ee4acaad2d35aafce55d591d01.png);
+    background-size: cover;
+    border-radius: 50%
+
+}
+.block-acc{
+
+    position: absolute;
+    width: 395px;
+    height: 428px;
+    left: 236px;
+    top: 129px;
+
+    background: #FFFFFF;
+    border-radius: 26px;
+
+}

@@ -6,11 +6,14 @@ import reportWebVitals from './Test/reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import MainMenuPage from "./pages/MainMenuPage";
 import Register from "./pages/Register";
+import Rules from "./pages/Rules";
+import Authorization from "./pages/Authorization";
+import PersonalAccount from "./pages/PersonalAccount";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <Register/>
+        <PersonalAccount/>
 
     </React.StrictMode>
 );

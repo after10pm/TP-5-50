@@ -1,0 +1,50 @@
+.main-block-rul{
+
+    position: absolute;
+    width: 1026px;
+    height: 959px;
+    left: 447px;
+    top: 105px;
+
+    background: #FFFFFF;
+    border-radius: 33px;
+
+
+}
+.main-block-rul-text{
+    /* Правила пользования сайтом */
+
+    position: absolute;
+    width: 566px;
+    height: 52px;
+    left: 680px;
+    top: 160px;
+
+    font-family: 'NT Somic';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 52px;
+
+    color: #000000;
+
+
+}
+.main-block-rul-text-2{
+
+    position: absolute;
+    width: 606px;
+    height: 1138px;
+    left: 680px;
+    top: 252px;
+
+    font-family: 'NT Somic';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+
+    color: #000000;
+
+
+}
