@@ -6,14 +6,12 @@ import Register from "../pages/Register";
 export default class MainPage extends Component {
     render() {
         return (
-            <BrowserRouter>
-                <div className='header'>
-                    <p className='brand'>SocialSphere</p>
-                    <NavLink exact to="/" className='button'>Вход</NavLink>
-                    <NavLink exact to="/registration" className='button-reg'>Регистрация</NavLink>
+            <div className='header'>
+                <p className='brand'>SocialSphere</p>
+                <NavLink exact to="/authorization" className='button'>Вход</NavLink>
+                <NavLink exact to="/register" className='button-reg'>Регистрация</NavLink>
 
-                </div>
-            </BrowserRouter>
+            </div>
 
 
         );

@@ -4,18 +4,25 @@ import {BrowserRouter, Link, NavLink, Route, Routes} from "react-router-dom";
 import React from "react";
 import MainMenuPage from "./MainMenuPage";
 import MainPage from "../components/MainPage";
+import Authorization from "./Authorization";
+import Register from "./Register";
+import Rules from "./Rules";
+import PersonalAccount from "./PersonalAccount";
+import PersonalAccountAuthor from "./PersonalAccountAuthor";
+import BlogEditing from "./BlogEditing";
 
 function App() {
     return (
         <BrowserRouter>
-
-            <NavLink exact to="/dsa" className='button-reg'>Регистрация</NavLink>
-
             <Routes>
-                <Route path="/dsa" element={<MainMenuPage/>}/>
-
+                <Route exact path="/" element={<MainMenuPage/>} />
+                <Route path="/authorization" element={<Authorization/>} />
+                <Route path="/register" element={<Register/>} />
+                <Route path="/rules" element={<Rules/>} />
+                <Route path="/profile" element={<PersonalAccount/>} />
+                <Route path="/profileAuthor" element={<PersonalAccountAuthor/>} />
+                <Route path="/blogEditing" element={<BlogEditing/>} />
             </Routes>
-
         </BrowserRouter>
 
     );

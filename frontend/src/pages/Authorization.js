@@ -8,7 +8,7 @@ class Authorization extends Component {
                 <div className='menu-reg' style={{ position: 'absolute', height: '560px' }}></div>
 
                 <div className='text-brand'>SocialSphere</div>
-                <div className='text-reg'>Регистрация</div>
+                <div className='text-reg'>Авторизация</div>
                 <input type="text" id="email" name="email" placeholder="Email" className='text-form'/>
                 <input type="text" id="password" name="password" placeholder="Пароль" className='text-form'
                        style={{position: 'absolute', top: '400px'}}/>

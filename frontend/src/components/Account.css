@@ -3,10 +3,10 @@
     position: absolute;
     width: 27px;
     height: 27px;
-    left: 1690px;
+    left: 1700px;
     top: 23px;
 
-    background: url(https://i.ibb.co/bWtW9sD/b25eb0ee4acaad2d35aafce55d591d01.png);
+    background: url(https://i.ibb.co/bWtW9sD/b25eb0ee4acaad2d35aafce55d591d01.png) center;
     background-size: cover;
     border-radius: 50%
 
@@ -16,10 +16,192 @@
     position: absolute;
     width: 395px;
     height: 428px;
-    left: 236px;
+    left: 190px;
     top: 129px;
 
     background: #FFFFFF;
     border-radius: 26px;
 
+}
+.acc-text-nick{
+    /* 0Nickname0 */
+
+    position: absolute;
+    width: 395px;
+    height: 45px;
+    left: 185px;
+    top: 330px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 31px;
+
+    align-items: center;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    color: #807EFF;
+
+
+}
+.acc-text-email{
+    /* email.email@mail.ru */
+
+    position: absolute;
+    width: 395px;
+    height: 45px;
+    left: 194px;
+    top: 370px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    align-items: center;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    color: #9E9E9E;
+
+
+}
+.acc-text-2{
+    /* Изменить данные */
+
+    position: absolute;
+    width: 395px;
+    height: 45px;
+    left: 190px;
+    top: 510px;
+
+    /* bold 15 */
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    align-items: center;
+    text-align: center;
+
+    color: #807EFF;
+
+
+}
+.acc-block-2{
+
+    position: absolute;
+    width: 1070px;
+    height: 700px;
+    left: 680px;
+    top: 129px;
+
+    background: #FFFFFF;
+    border-radius: 26px;
+
+}
+.acc-text-3{
+
+    /* Подписки */
+
+    position: absolute;
+    width: 193px;
+    height: 52px;
+    left: 768px;
+    top: 175px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 52px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #555555;
+
+
+}
+.acc-button-unscribe{
+    background-color: #FF6F6F;
+    position: absolute;
+    width: 185px;
+    height: 44px;
+    left: 1506px;
+    top: 253px;
+    border-radius: 53px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+
+
+
+}
+.acc-button-info{
+    background-color: #F5F5F5;
+    position: absolute;
+    width: 185px;
+    height: 44px;
+    left: 1506px;
+    top: 253px;
+    border-radius: 53px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #807EFF;
+
+
+
+}
+.acc-text-nick-another{
+    /* username */
+
+    position: absolute;
+    width: 109px;
+    height: 26px;
+    left: 839px;
+    top: 262px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #807EFF;
+
+
+}
+.imgfs-2{
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    top: 248px;
+    left: 760px;
+    background: url(https://i.ibb.co/9pxVpGk/66043f76bc47e092d6c5bd2448fb5608.png) center;
+
+    background-size: cover;
+    border-radius: 50%;
 }
