@@ -1,0 +1,98 @@
+.category-block{
+
+    position: absolute;
+    width: 1026px;
+    height: 800px;
+    left: 447px;
+    top: 105px;
+
+    background: #FFFFFF;
+    border-radius: 33px;
+
+}
+.category-main-text{
+
+    position: absolute;
+    width: 201px;
+    height: 52px;
+    left: 657px;
+    top: 161px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 52px;
+
+    color: #000000;
+
+}
+.category-search{
+    /* Group 33 */
+
+    position: absolute;
+    width: 185px;
+    height: 27px;
+    left: 657px;
+    top: 239px;
+    padding-left: 20px;
+    background-color: #F5F5F5;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    border-radius: 51px;
+    /* identical to box height */
+    border: none;
+
+    color: #9E9E9E;
+
+}
+.category-search::placeholder{
+    color: #9E9E9E; /* Цвет текста placeholder */
+    text-align: left; /* Выравнивание текста по центру */
+    font-family: 'NT Somic', sans-serif;
+}
+.category-letter{
+    /* А */
+
+    position: absolute;
+    width: 185px;
+    height: 51px;
+    left: 657px;
+    top: 280px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 52px;
+
+    color: #807EFF;
+
+
+}
+.category-word{
+    /* арбуз */
+
+    position: absolute;
+    width: 185px;
+    height: 25px;
+    left: 657px;
+    top: 341px;
+
+    /* bold 15 */
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+
+    color: #000000;
+
+
+}

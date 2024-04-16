@@ -95,7 +95,7 @@
 
     position: absolute;
     width: 1070px;
-    height: 700px;
+    height: 1200px;
     left: 680px;
     top: 129px;
 
@@ -204,4 +204,319 @@
 
     background-size: cover;
     border-radius: 50%;
+}
+
+.button-change-post{
+    /* Group 30 */
+
+    position: absolute;
+    width: 185px;
+    height: 44px;
+    left: 1414px;
+    top: 261px;
+    background-color: #807EFF;
+    border-radius: 53px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+
+
+}
+.button-delete-post{
+    /* Group 30 */
+
+    position: absolute;
+    width: 185px;
+    height: 44px;
+    left: 1414px;
+    top: 320px;
+    background-color: #FF6F6F;
+    border-radius: 53px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+
+
+}
+.change-block-acc{
+
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 606px;
+    height: 487px;
+    left: 768px;
+    top: 261px;
+
+    border: 1px solid #807EFF;
+    border-radius: 16px;
+
+
+}
+.acc-text-4{
+    /* username */
+
+    position: absolute;
+    width: 109px;
+    height: 26px;
+    left: 840px;
+    top: 280px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #807EFF;
+
+
+
+}
+.imgfs-3{
+
+    position: absolute;
+    width: 451px;
+    height: 131px;
+    left: 862px;
+    top: 328px;
+
+    background: url(https://i.ibb.co/TqhXsRr/908b3e307b2499cf35dcedcb8c275978-Expires-1714348800-Key-Pair-Id-APKAQ4-GOSFWCVNEHN3-O4-Signature-c-O.png) center;
+    background-size: cover;
+
+}
+.acc-text-5{
+    /* Название поста 1 */
+
+    position: absolute;
+    width: 395px;
+    height: 45px;
+    left: 862px;
+    top: 467px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 31px;
+    display: flex;
+    align-items: center;
+
+    color: #555555;
+
+
+}
+.text-under-post{
+
+    position: absolute;
+    width: 450px;
+    height: 109px;
+    left: 863px;
+    top: 512px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+
+    color: #000000;
+
+
+}
+.date-post{
+    /* 18:01 21.08.2024 */
+
+    position: absolute;
+    width: 211px;
+    height: 21px;
+    left: 1106px;
+    top: 707px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    text-align: right;
+
+    color: #9E9E9E;
+
+
+}
+.number-likes{
+    /* 1098 */
+
+    position: absolute;
+    width: 90px;
+    height: 18px;
+    left: 889px;
+    top: 707px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+
+    color: #9E9E9E;
+
+
+}
+.heart {
+    display: inline-block;
+    position: absolute;
+    top: 706px;
+    left: 863px;
+    width: 20px;
+    aspect-ratio: 1;
+    border-image: radial-gradient(#FF6F6F 69%, #0000 70%) 84.5%/50%;
+    clip-path: polygon(-41% 0, 50% 91%, 141% 0);
+}
+
+.comments{
+
+
+    position: absolute;
+    width: 90px;
+    height: 18px;
+    left: 981px;
+    top: 707px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+
+    color: #9E9E9E;
+
+
+}
+
+.create-post{
+    /* Group 6 */
+
+    position: absolute;
+    width: 395px;
+    height: 56px;
+    left: 190px;
+    top: 751px;
+    background-color: #807EFF;
+    border-radius: 53px;
+    /* Создать пост */
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+
+
+
+}
+
+.statistic-block{
+    /* Rectangle 24 */
+
+    position: absolute;
+    width: 395px;
+    height: 238px;
+    left: 190px;
+    top: 490px;
+
+    background: #FFFFFF;
+    border-radius: 16px;
+
+}
+.statistic-text-main{
+    /* Статистика */
+
+    position: absolute;
+    width: 132px;
+    height: 31px;
+    left: 235px;
+    top: 509px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 31px;
+    display: flex;
+    align-items: center;
+
+    color: #807EFF;
+
+
+}
+.statistic-text{
+    /* Подписок */
+
+    position: absolute;
+    width: 73px;
+    height: 20px;
+    left: 235px;
+    top: 555px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #807EFF;
+
+
+}
+.statistic-text-count{
+    /* 13 098 */
+
+    position: absolute;
+    width: 208px;
+    height: 46px;
+    left: 233px;
+    top: 579px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 31px;
+    display: flex;
+    align-items: center;
+
+    color: #9E9E9E;
+
+
 }

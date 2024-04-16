@@ -1,0 +1,43 @@
+.admins-fon{
+
+    position: absolute;
+    width: 27px;
+    height: 27px;
+    left: 1700px;
+    top: 23px;
+
+    border-radius: 50%;
+
+    background: #DFDEFF;
+
+    overflow: hidden;
+
+}
+
+
+.admins-img{
+    /* Ellipse 28 */
+
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    left: 50%; /* Половина родителя */
+    top: 35%; /* Половина родителя */
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: #807EFF;
+
+}
+.admins-img-2{
+
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 50%; /* Половина родителя */
+    top: 90%;
+    transform: translate(-50%, -50%);
+    background: #807EFF;
+    border-radius: 50%;
+
+
+}
