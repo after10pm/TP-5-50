@@ -7,12 +7,11 @@ class PersonalAccount extends Component {
     render() {
         return (
             <div className='header'>
-                <p className='brand'>SocialSphere</p>
+                <NavLink exact to="/" className='brand'>SocialSphere</NavLink>
                 <div className='button' style={{position: 'absolute', left: '1660px', width: '215px'}}>0Nickname0</div>
                 <div className='imgfs'></div>
                 <BlockAcc/>
-                <div className='button' style={{position: 'absolute', left: '270px', top:'405px', width: '212px', height:'56px', backgroundColor:'#807EFF', color:"white", borderRadius:'75px'}}>Стать автором</div>
-
+                <NavLink exact to="/blogEditing"  className='button' style={{position: 'absolute', left: '270px', top:'405px', width: '212px', height:'56px', backgroundColor:'#807EFF', color:"white", borderRadius:'75px'}}>Стать автором</NavLink>
                 <div className='acc-block-2'></div>
                 <div className='acc-text-3'>Подписки</div>
                 <div className='acc-button-unscribe'>Отписаться</div>

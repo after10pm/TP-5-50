@@ -7,7 +7,7 @@ export default class MainPage extends Component {
     render() {
         return (
             <div className='header'>
-                <p className='brand'>SocialSphere</p>
+                <NavLink exact to="/" className="brand">SocialSphere</NavLink>
                 <NavLink exact to="/authorization" className='button'>Вход</NavLink>
                 <NavLink exact to="/register" className='button-reg'>Регистрация</NavLink>
 

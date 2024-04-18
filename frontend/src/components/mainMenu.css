@@ -81,6 +81,8 @@
     font-weight: 700;
     font-size: 18px;
     line-height: 24px;
+    text-decoration: none;
+
     display: flex;
     align-items: center;
     justify-content: center;

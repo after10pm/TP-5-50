@@ -52,6 +52,7 @@
     align-items: center;
     text-align: center;
 
+
     color: #555555;
 
 
@@ -59,10 +60,11 @@
 .text-form{
 
     position: absolute;
-    width: 466px;
+    width: 380px;
     height: 66px;
     left: 727px;
     top: 303px;
+    padding-left: 45px;
     background: #F4F4F4;
     font-family: 'NT Somic', sans-serif;
     font-style: normal;
@@ -76,7 +78,7 @@
 .text-form::placeholder {
     color: #9E9E9E; /* Цвет текста placeholder */
     text-align: left; /* Выравнивание текста по центру */
-    padding-left: 45px; /* Отступ слева */
+     /* Отступ слева */
 }
 .rec{
 
@@ -100,6 +102,9 @@
 
     background: #807EFF;
     border-radius: 74px;
+
+    text-decoration: none;
+
 
     font-family: 'NT Somic', sans-serif;
     font-style: normal;
@@ -168,7 +173,9 @@
     left: 878px;
     top: 890px;
 
-    font-family: 'NT Somic';
+    text-decoration: none;
+
+    font-family: 'NT Somic', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 15px;

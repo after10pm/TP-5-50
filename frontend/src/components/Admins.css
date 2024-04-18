@@ -41,3 +41,190 @@
 
 
 }
+
+
+.admins-block{
+    /* Rectangle 29 */
+
+    position: absolute;
+    width: 1026px;
+    height: 1006px;
+    left: 447px;
+    top: 105px;
+
+    background: #FFFFFF;
+    border-radius: 33px;
+
+}
+.admins-block-text{
+    /* Аккаунты пользователей */
+
+    position: absolute;
+    width: 450px;
+    height: 46px;
+    left: 657px;
+    top: 177px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 46px;
+    /* identical to box height */
+
+    color: #000000;
+
+}
+.admins-accounts-color{
+    position: absolute;
+    width: 1052px;
+    height: 30px;
+    left: 421px;
+    top: 290px;
+
+    background: #F5F5F5;
+
+}
+.admins-text-user{
+
+    position: absolute;
+    width: 109px;
+    height: 26px;
+    left: 689px;
+    top: 292px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #807EFF;
+
+}
+.admins-img-3{
+    /* Ellipse 4 */
+
+    position: absolute;
+    width: 27px;
+    height: 27px;
+    left: 653px;
+    top: 292px;
+
+    background: url(https://i.ibb.co/9pxVpGk/66043f76bc47e092d6c5bd2448fb5608.png) center;
+
+    background-size: cover;
+    border-radius: 50%;
+
+}
+
+.admins-accounts-block{
+    /* Заблокировать */
+
+    position: absolute;
+    width: 111px;
+    height: 20px;
+    left: 917px;
+    top: 295px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 20px;
+
+    color: #555555;
+
+
+}
+.admins-accounts-unblock{
+    /* Разблокировать */
+
+    position: absolute;
+    width: 118px;
+    height: 20px;
+    left: 1070px;
+    top: 295px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+
+    color: #29C71B;
+
+}
+.admins-accounts-delete{
+    /* Удалить */
+
+    position: absolute;
+    width: 58px;
+    height: 20px;
+    left: 1215px;
+    top: 295px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+
+    color: #FF6F6F;
+
+
+}
+
+.admins-add-category{
+
+    position: absolute;
+    width: 185px;
+    height: 44px;
+    left: 890px;
+    top: 239px;
+    background-color: #807EFF;
+    border-radius: 53px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+
+}
+.admins-add-category-input{
+
+    /* Rectangle 30 */
+
+    position: absolute;
+    width: 254px;
+    height: 27px;
+    left: 1079px;
+    top: 257px;
+
+    background: #F5F5F5;
+    border-radius: 51px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+
+    border: none;
+
+
+    color: #000000;
+
+
+}

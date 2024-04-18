@@ -13,6 +13,8 @@ import BlogEditing from "./BlogEditing";
 import AuthorPage from "./AuthorPage";
 import Category from "./Category";
 import AdminAccounts from "./AdminAccounts";
+import BlockCategory from "../components/blockCategory";
+import CategoryAdmins from "./categoryAdmins";
 
 function App() {
     return (
@@ -28,6 +30,7 @@ function App() {
                 <Route path="/authorPage" element={<AuthorPage/>} />
                 <Route path="/category" element={<Category/>} />
                 <Route path="/adminAccounts" element={<AdminAccounts/>} />
+                <Route path="/categoryAdmins" element={<CategoryAdmins/>} />
 
             </Routes>
         </BrowserRouter>
