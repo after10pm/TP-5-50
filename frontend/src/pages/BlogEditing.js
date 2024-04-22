@@ -4,7 +4,25 @@ import Post from "../components/Post";
 import Statistic from "../components/Statistic";
 import {NavLink} from "react-router-dom";
 
+import "bootstrap-icons/font/bootstrap-icons.css";
+import NewPost from "../components/NewPost";
+
 class BlogEditing extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            showNewPost: false
+        };
+    }
+
+    handleImageUpload = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            console.log('Выбранный файл:', file);
+        }
+    };
     render() {
         return (
             <div className='header'>
@@ -25,6 +43,12 @@ class BlogEditing extends Component {
                 <div className='acc-block-2'></div>
                 <div className='create-post'>Создать пост</div>
                 <div className='acc-text-3' style={{width:'480px', top:'190px'}}>Редактирование блога</div>
+
+
+                <NewPost/>
+
+                <div className='create-post' style={{ top: '1180px' }}>Опубликовать пост</div>
+
                 <Post/>
                 {/*Второй пост */}
                 <div className='container' style={{position: 'absolute', top: '500px'}}>

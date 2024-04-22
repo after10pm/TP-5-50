@@ -149,6 +149,58 @@
 
 
 }
+
+.unsubscribe-confirmation{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+
+    background-color: #807EFF;
+
+    left: 900px;
+    top: 500px;
+
+
+}
+.unscribe-text{
+
+    /* email.email@mail.ru */
+
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+    width: 185px;
+    height: 26px;
+
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 26px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #FFFFFF;
+
+}
+
+.unscribe-button{
+    /* Group 6 */
+
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    left: 327px;
+    top: 413px;
+    border: none;
+
+    color: #FFFFFF;
+
+    background-color: #807EFF;
+}
 .acc-button-info{
     background-color: #F5F5F5;
     position: absolute;
@@ -329,7 +381,7 @@
 
     position: absolute;
     width: 450px;
-    height: 109px;
+    height: 140px;
     left: 863px;
     top: 512px;
 
@@ -338,6 +390,12 @@
     font-weight: 400;
     font-size: 15px;
     line-height: 20px;
+
+    outline: none;
+
+    resize: none;
+
+
 
     color: #000000;
 
@@ -414,6 +472,18 @@
 
     color: #9E9E9E;
 
+
+}
+.comments-mark{
+    /* 🦆 icon "chat" */
+
+    position: absolute;
+    left: 955px;
+    top: 703px;
+
+    font-size: 20px;
+
+    color: #807EFF;
 
 }
 
@@ -516,6 +586,125 @@
     display: flex;
     align-items: center;
 
+    color: #9E9E9E;
+
+
+}
+
+.block-create-post{
+    /* Rectangle 25 */
+
+    position: absolute;
+    width: 395px;
+    height: 286px;
+    left: 192px;
+    top: 850px;
+
+
+
+    background: #FFFFFF;
+    border-radius: 17px;
+
+
+}
+
+.block-create-text{
+    /* Введите заголовок */
+
+    position: absolute;
+    width: 300px;
+    height: 26px;
+    left: 225px;
+    top: 865px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    display: flex;
+    align-items: center;
+
+    outline: none;
+
+    border:none;
+
+    color: #9E9E9E;
+
+
+}
+.block-create-text::placeholder{
+    font-family: 'NT Somic', sans-serif;
+    color: #9E9E9E;
+}
+.block-create-text-2{
+    /* Введите текст поста */
+
+    position: absolute;
+
+    width: 320px;
+    height: 180px;
+
+    left: 225px;
+    top: 905px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+
+    outline: none;
+
+    resize: none;
+
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    color: #9E9E9E;
+
+}
+.block-create-text-2::placeholder{
+    color: #9E9E9E;
+}
+.block-create-img{
+    /* Прикрепить картинку */
+
+    position: absolute;
+    width: 200px;
+    height: 20px;
+    left: 235px;
+    top: 1100px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    /* identical to box height */
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    color: #9E9E9E;
+
+
+}
+.block-create-img-2{
+
+    position: absolute;
+    left: 210px;
+    top: 1100px;
+    font-family: 'NT Somic', sans-serif;
+    transform: rotate(45deg);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
     color: #9E9E9E;
 
 
