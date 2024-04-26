@@ -105,6 +105,24 @@
     color: #807EFF;
 
 }
+.admins-text-user-blocked{
+    position: absolute;
+    width: 109px;
+    height: 26px;
+    left: 689px;
+    top: 292px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #FF6F6F;
+}
 .admins-img-3{
     /* Ellipse 4 */
 
@@ -135,6 +153,7 @@
     font-weight: 600;
     font-size: 17px;
     line-height: 20px;
+    cursor: pointer;
 
     color: #555555;
 
@@ -154,6 +173,7 @@
     font-weight: 600;
     font-size: 15px;
     line-height: 20px;
+    cursor: pointer;
 
     color: #29C71B;
 
@@ -212,6 +232,7 @@
 
     background: #F5F5F5;
     border-radius: 51px;
+    padding-left: 20px;
 
     font-family: 'NT Somic', sans-serif;
     font-style: normal;
@@ -222,9 +243,15 @@
     align-items: center;
 
     border: none;
+    outline: none;
 
 
     color: #000000;
 
 
+}
+.admins-add-category-input::placeholder{
+    color: #9E9E9E; /* Цвет текста placeholder */
+    text-align: left; /* Выравнивание текста по центру */
+    font-family: 'NT Somic', sans-serif;
 }

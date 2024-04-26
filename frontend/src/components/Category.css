@@ -48,6 +48,7 @@
     border-radius: 51px;
     /* identical to box height */
     border: none;
+    outline: none;
 
     color: #9E9E9E;
 

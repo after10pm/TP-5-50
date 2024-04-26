@@ -390,6 +390,9 @@
     font-weight: 400;
     font-size: 15px;
     line-height: 20px;
+    box-sizing: border-box;
+
+
 
     outline: none;
 
@@ -400,6 +403,32 @@
     color: #000000;
 
 
+}
+.text-under-post-change{
+    position: absolute;
+    width: 455px;
+    height: 145px;
+    left: 863px;
+    top: 512px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    box-sizing: border-box;
+
+
+    border: 1px solid #807EFF;
+    border-radius: 12px;
+
+    outline: none;
+
+    resize: none;
+
+
+
+    color: #000000;
 }
 .date-post{
     /* 18:01 21.08.2024 */

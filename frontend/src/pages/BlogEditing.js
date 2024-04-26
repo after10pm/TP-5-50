@@ -6,6 +6,9 @@ import {NavLink} from "react-router-dom";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import NewPost from "../components/NewPost";
+import {POSTS} from "../shared/Posts";
+
+import "../components/post11.css"
 
 class BlogEditing extends Component {
 
@@ -19,11 +22,21 @@ class BlogEditing extends Component {
     handleImageUpload = (e) => {
         const file = e.target.files[0];
 
-        if (file) {
-            console.log('Выбранный файл:', file);
-        }
     };
+
     render() {
+        const blogPosts = POSTS.map((item) => {
+            return (
+                <div key={item.index} className='container' style={{position: 'absolute', top: (-500+item.index * 510) + 'px', left: '0px' }}>
+                    <Post
+                        title={item.title}
+                        description={item.description}
+                        author={item.author}
+                        date={item.date}
+                    />
+                </div>
+            );
+        });
         return (
             <div className='header'>
 
@@ -46,14 +59,10 @@ class BlogEditing extends Component {
 
 
                 <NewPost/>
-
-                <div className='create-post' style={{ top: '1180px' }}>Опубликовать пост</div>
-
-                <Post/>
-                {/*Второй пост */}
-                <div className='container' style={{position: 'absolute', top: '500px'}}>
-                    <Post/>
+                <div>
+                    {blogPosts}
                 </div>
+
 
                 <Statistic/>
             </div>

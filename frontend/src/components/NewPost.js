@@ -14,6 +14,21 @@ class NewPost extends Component {
     handleTextChange = (event) => {
         this.setState({ postText: event.target.value });
     };
+    handleAddFromHide = () =>{
+        this.setState({
+            postTitle: '',
+            postText: ''
+        })
+    }
+    createPost = () =>{
+        const post ={
+            title:this.state.postTitle,
+            description:this.state.postText
+        }
+        console.log(post)
+
+        this.handleAddFromHide()
+    }
     render() {
         return (
             <div>
@@ -40,6 +55,9 @@ class NewPost extends Component {
                 <input type="file" id="fileInput" style={{display: 'none'}} onChange={this.handleImageUpload} accept=".jpg, .png" />
                 <i className="bi bi-paperclip block-create-img-2" onClick={() => document.getElementById('fileInput').click()}></i>
                 <div className='block-create-img' onClick={() => document.getElementById('fileInput').click()} >Прикрепить картинку</div>
+
+
+                <button className='create-post' style={{top:'1180px'}} onClick={this.createPost}>Опубликовать пост</button>
 
 
 
