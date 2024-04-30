@@ -26,6 +26,8 @@
 
 [Miro](https://miro.com/app/board/uXjVNk1lxtU=/)
 
+[Figma](https://www.figma.com/design/4mNkHx8TknUEsDR7NmSwqF/TP-50-5-3)
+
 # **Документация:**
 [Техническое задание](https://github.com/after10pm/TP-5-50/blob/main/documentation/%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5%20%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5.pdf)
 
