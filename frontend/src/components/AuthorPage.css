@@ -1,0 +1,169 @@
+.account-header{
+    /* Rectangle 18 */
+
+    position: absolute;
+    width: 977px;
+    height: 209px;
+    left: calc(50% - 977px/2 + 5.5px);
+    top: 134px;
+    border-radius: 26px;
+    background: url(https://i.ibb.co/XS4p04K/4c6aabbcf3b0683b60ad7b181489b3b7-Expires-1714348800-Key-Pair-Id-APKAQ4-GOSFWCVNEHN3-O4-Signature-b-Q.png) center 85%;
+    background-size: cover;
+
+}
+.account-block{
+    /* Rectangle 17 */
+
+    position: absolute;
+    width: 1026px;
+    height: 345px;
+    left: calc(50% - 1026px/2);
+    top: 111px;
+
+    background: #FFFFFF;
+    border-radius: 26px;
+
+}
+.account-img{
+    /* Ellipse 3 */
+
+    position: absolute;
+    width: 161px;
+    height: 161px;
+    left: 536px;
+    top: 277px;
+
+    background: url(https://i.ibb.co/9pxVpGk/66043f76bc47e092d6c5bd2448fb5608.png) center;
+    background-size: cover;
+    border-radius: 50%;
+    border: 13px solid #FFFFFF;
+
+}
+.account-text-username{
+
+
+    position: absolute;
+    width: 395px;
+    height: 45px;
+    left: 730px;
+    top: 369px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 52px;
+    display: flex;
+    align-items: center;
+
+    color: #807EFF;
+
+
+}
+.account-text-read{
+    /* Читать далее... */
+
+    position: absolute;
+    width: 159px;
+    height: 20px;
+    left: 835px;
+    top: 707px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    /* identical to box height */
+
+    color: #807EFF;
+
+
+}
+.account-check-mark{
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    left: 811.2px;
+    top: 710px;
+    border: 2px solid #807EFF;
+    transform: rotate(-45deg);
+    border-top: none;
+    border-right: none;
+
+}
+.account-text-comment{
+    /* Хинаточка, продолжай нас радовать своим твореством!!!! <3 */
+
+    position: absolute;
+    width: 350px;
+    height: 47px;
+    left: 760px;
+    top: 1455px;
+
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+
+    color: #777777;
+
+
+}
+.account-text-write {
+
+
+
+    position: absolute;
+    width: 408px;
+    height: 29px;
+    left: 750px;
+    top: 1514px;
+    padding-left: 20px;
+
+    background: #F4F4F4;
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #AFAFAF;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    border-radius: 74px;
+    border: none;
+
+
+}
+.account-text-write::placeholder{
+    color: #9E9E9E; /* Цвет текста placeholder */
+    text-align: left; /* Выравнивание текста по центру */
+    font-family: 'NT Somic', sans-serif;
+}
+.account-button{
+    position: absolute;
+    width: 240px;
+    height: 45px;
+    left: 1160px;
+    top: 369px;
+
+    background: #807EFF;
+
+    border-radius: 22.5px;
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+
+}
+.account-button.subscribed {
+    background-color: #FF6F6F; /* Любой другой цвет для подписки */
+    color: #FFFFFF; /* Цвет текста для подписки */
+}

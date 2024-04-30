@@ -5,7 +5,7 @@ class PersonalAccountAuthor extends Component {
     render() {
         return (
             <div className='header'>
-                <p className='brand'>SocialSphere</p>
+                <NavLink exact to="/" className='brand'>SocialSphere</NavLink>
                 <div className='button' style={{position: 'absolute', left: '1660px', width: '215px'}}>0Nickname0</div>
                 <div className='imgfs'></div>
                 <div className='block-acc'></div>

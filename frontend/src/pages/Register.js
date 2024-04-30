@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import '../components/Register.css';
+import {NavLink} from "react-router-dom";
 
 
 function Register() {
@@ -24,16 +25,20 @@ function Register() {
                    style={{position: 'absolute', top: '570px'}}/>
             <input type="text" id="password" name="password" placeholder="Повторите пароль" className='text-form'
                    style={{position: 'absolute', top: '660px'}}/>
-            <div className='rec'></div>
+            <div className='rec' style={{left:'1110px'}}></div>
             <div className='mark-reg'></div>
             <input type="checkbox" id="agreeCheckBox" onClick={toggleCheckbox} className='mark-reg-2'/>
 
-            <div className='check-mark'/>
+            <div className='check-mark' style={{left:'1116.5px'}}/>
             <div className="text-conf">
                 Регистрируясь на сайте, вы принимаете условия оказания услуг, условия платежей, политику
                 конфиденциальности и политику файлов cookie
             </div>
-            <div className='text-in'> У вас есть аккаунт? Войти</div>
+            <div className='text-in'> У вас есть аккаунт?</div>
+
+            <NavLink exact to="/authorization" className='text-in' style={{left:'1020px', color:'#807EFF'}}>Войти</NavLink>
+            {/*<div className='text-in' style={{left:'1020px', color:'#807EFF'}}>Войти</div>*/}
+
 
             <div className='button-registr'>Зарегистрироваться</div>
 

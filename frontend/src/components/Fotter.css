@@ -4,11 +4,13 @@
     height: 30px;
     left: 0px;
     top: 950px;
-    font-family: 'NT Somic';
+    font-family: 'NT Somic', sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 15px;
     line-height: 20px;
+
+    text-decoration: none;
 
     align-items: center;
     text-align: right;

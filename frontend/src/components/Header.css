@@ -21,6 +21,8 @@ body {
     font-style: italic;
     font-size: 34.69px;
     line-height: 42.29px;
+    text-decoration: none;
+
 }
 .button {
     position: absolute;
@@ -36,6 +38,7 @@ body {
     font-family: "NT SOM", sans-serif;
     font-size: 18px;
     line-height: 23.58px;
+    text-decoration: none;
 
     display: flex;
     align-items: center;
@@ -55,6 +58,8 @@ body {
     font-family: "NT SOM", sans-serif;
     font-size: 18px;
     line-height: 23.58px;
+    text-decoration: none;
+
     display: flex;
     align-items: center;
     justify-content: center;

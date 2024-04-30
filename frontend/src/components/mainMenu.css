@@ -76,10 +76,13 @@
 
     background: #807EFF;
     border-radius: 22.5px;
+    font-family: 'NT Somic', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 18px;
     line-height: 24px;
+    text-decoration: none;
+
     display: flex;
     align-items: center;
     justify-content: center;
