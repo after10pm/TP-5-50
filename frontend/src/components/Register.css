@@ -31,6 +31,7 @@
     font-weight: 800;
     font-size: 59.6452px;
     line-height: 73px;
+    text-decoration: none;
 
     color: #807EFF;
 
@@ -72,7 +73,8 @@
     font-size: 20px;
     color: #9E9E9E;
     border-radius: 74px;
-    border: none
+    border: none;
+    outline: none;
 
 }
 .text-form::placeholder {
@@ -80,6 +82,30 @@
     text-align: left; /* Выравнивание текста по центру */
      /* Отступ слева */
 }
+.text-form-invalid{
+    position: absolute;
+    width: 380px;
+    height: 66px;
+    left: 727px;
+    top: 303px;
+    padding-left: 45px;
+    background: #F4F4F4;
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    color: #FF6F6F;
+    border-radius: 74px;
+    border: none;
+    outline: none;
+
+}
+.text-form-invalid::placeholder {
+    color: #FF6F6F; /* Цвет текста placeholder */
+    text-align: left; /* Выравнивание текста по центру */
+    /* Отступ слева */
+}
+
 .rec{
 
     position: absolute;
@@ -104,6 +130,7 @@
     border-radius: 74px;
 
     text-decoration: none;
+    border:none;
 
 
     font-family: 'NT Somic', sans-serif;
@@ -117,6 +144,22 @@
 
     color: #FFFFFF;
 
+
+}
+.button-registr-text{
+    font-family: 'NT Somic', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+    border:none;
+
+    color: #FFFFFF;
 
 }
 .mark-reg{
@@ -187,6 +230,17 @@
     color: #9E9E9E;
 
 
+}
+.date-picker-container {
+    position: absolute;
+    top: 650px;
+    left: 1116.5px;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
 }
 .check-mark{
 

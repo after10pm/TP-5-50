@@ -15,6 +15,7 @@ import Category from "./Category";
 import AdminAccounts from "./AdminAccounts";
 import BlockCategory from "../components/blockCategory";
 import CategoryAdmins from "./categoryAdmins";
+import ServicePanel from "./ServicePanel";
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/category" element={<Category/>} />
                 <Route path="/adminAccounts" element={<AdminAccounts/>} />
                 <Route path="/categoryAdmins" element={<CategoryAdmins/>} />
+                <Route path="/ServicePanel" element={<ServicePanel/>} />
 
             </Routes>
         </BrowserRouter>

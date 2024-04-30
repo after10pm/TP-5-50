@@ -24,6 +24,20 @@ body {
     text-decoration: none;
 
 }
+.panelS{
+    position: absolute;
+    left: 300px;
+    top: 300px;
+
+    color: #807EFF;
+    cursor: pointer;
+
+    font-family: Montserrat, sans-serif;
+    font-style: italic;
+    font-size: 30px;
+    line-height: 42.29px;
+    text-decoration: none;
+}
 .button {
     position: absolute;
     top: 14px;
