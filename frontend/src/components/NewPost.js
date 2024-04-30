@@ -20,14 +20,23 @@ class NewPost extends Component {
             postText: ''
         })
     }
-    createPost = () =>{
-        const post ={
-            title:this.state.postTitle,
-            description:this.state.postText
+    createPost = () => {
+        if (this.state.postTitle === '' || this.state.postText === '') {
+            alert('Нельзя создавать пустые посты!');
+            return;
         }
-        console.log(post)
+        const newPost = {
+            index: this.props.POSTS.length+1,
+            title: this.state.postTitle,
+            description: this.state.postText,
+            author: '0Nickname0',
+            date: new Date().toLocaleDateString()
+        };
 
-        this.handleAddFromHide()
+
+        this.handleAddFromHide();
+
+        this.props.addNewPost(newPost);
     }
     render() {
         return (
@@ -57,7 +66,7 @@ class NewPost extends Component {
                 <div className='block-create-img' onClick={() => document.getElementById('fileInput').click()} >Прикрепить картинку</div>
 
 
-                <button className='create-post' style={{top:'1180px'}} onClick={this.createPost}>Опубликовать пост</button>
+                <button className='create-post' style={{top:'1090px'}} onClick={this.createPost}>Опубликовать пост</button>
 
 
 

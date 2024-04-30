@@ -1,6 +1,7 @@
 import React, {Component, useState} from 'react';
 import "../components/AuthorPage.css";
 import Post from "../components/Post";
+import {NavLink} from "react-router-dom";
 
 
 class AuthorPage extends Component {
@@ -17,7 +18,7 @@ class AuthorPage extends Component {
     render() {
         return (
             <div className='header'>
-                <p className='brand'>SocialSphere</p>
+                <NavLink exact to="/" className='brand'>SocialSphere</NavLink>
                 <div className='button' style={{position: 'absolute', left: '1660px', width: '215px'}}>0Nickname0</div>
                 <div className='imgfs'></div>
                 <div className='rec' style={{left: '1860px', top: '25px', backgroundColor:'#DFDEFF', width:'21px', height:'21px'}}></div>

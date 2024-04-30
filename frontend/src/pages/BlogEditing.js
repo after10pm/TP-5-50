@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import BlockAcc from "../components/BlockAcc";
 import Post from "../components/Post";
 import Statistic from "../components/Statistic";
 import {NavLink} from "react-router-dom";
@@ -8,37 +7,57 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import NewPost from "../components/NewPost";
 import {POSTS} from "../shared/Posts";
 
-import "../components/post11.css"
 
 class BlogEditing extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            showNewPost: false
+            showNewPost: false,
+            POSTS:POSTS,
+            showButton: true
         };
     }
-
     handleImageUpload = (e) => {
         const file = e.target.files[0];
 
     };
+    handleCreatePost = () => {
+        this.setState({ showNewPost: true });
+        this.setState({showButton:false})
+    };
+    deletePost = (postId) => {
+        const updatedPosts = this.state.POSTS.filter((post) => post.index !== postId);
+        this.setState({ POSTS: updatedPosts });
+        console.log(updatedPosts);
+    };
+
+    addNewPost = (newPost) => {
+        const updatedPosts = [...this.state.POSTS, newPost];
+        this.setState({ POSTS: updatedPosts });
+        console.log(updatedPosts);
+        this.setState({ showNewPost: false});
+        this.setState({showButton:true})
+    };
+
 
     render() {
-        const blogPosts = POSTS.map((item) => {
+        const blogPosts = this.state.POSTS.map((item) => {
             return (
                 <div key={item.index} className='container' style={{position: 'absolute', top: (-500+item.index * 510) + 'px', left: '0px' }}>
-                    <Post
-                        title={item.title}
-                        description={item.description}
-                        author={item.author}
-                        date={item.date}
+                    <Post onDelete={this.deletePost} index={item.index}
+                          title={item.title}
+                          description={item.description}
+                          author={item.author}
+                          date={item.date}
+                          POSTS={this.state.POSTS}
                     />
                 </div>
             );
         });
         return (
             <div className='header'>
+
 
                 <NavLink exact to="/" className='brand'>SocialSphere</NavLink>
 
@@ -53,12 +72,20 @@ class BlogEditing extends Component {
                 <div className='acc-text-nick'>0Nickname0</div>
                 <div className='acc-text-email'>email.email@mail.ru</div>
                 <div className='acc-text-2' style={{top:'440px'}}>Изменить данные</div>
-                <div className='acc-block-2'></div>
-                <div className='create-post'>Создать пост</div>
+                <div className='acc-block-2' style={{height: Math.max(640, this.state.POSTS.length * 580) + 'px'}}></div>
+
+                {this.state.showButton  && (
+                    <div className='create-post' onClick={this.handleCreatePost}>Создать пост</div>)
+                }
                 <div className='acc-text-3' style={{width:'480px', top:'190px'}}>Редактирование блога</div>
 
 
-                <NewPost/>
+                {this.state.showNewPost && (
+                    <NewPost addNewPost={this.addNewPost}
+                             POSTS={this.state.POSTS}
+                    />
+
+                )}
                 <div>
                     {blogPosts}
                 </div>

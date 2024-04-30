@@ -7,9 +7,9 @@ class Post extends Component {
         editedText: this.props.description
     };
     handleDeletePost = () => {
-
         const confirmDelete = window.confirm("Вы действительно хотите удалить пост?");
         if (confirmDelete) {
+            this.props.onDelete(this.props.index); // Вызываем функцию onDelete из родительского компонента
             this.setState({ isPostDeleted: true });
         }
     };

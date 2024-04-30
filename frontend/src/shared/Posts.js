@@ -1,4 +1,4 @@
-export const POSTS = [
+export let POSTS = [
     {
         index: 1,
         title: "Название поста 1",

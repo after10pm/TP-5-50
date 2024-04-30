@@ -27,7 +27,7 @@ class PersonalAccount extends Component {
                 <div className='button' style={{ position: 'absolute', left: '1660px', width: '215px' }}>0Nickname0</div>
                 <div className='imgfs'></div>
                 <BlockAcc />
-                <NavLink exact to="/blogEditing" className='button' style={{ position: 'absolute', left: '270px', top: '405px', width: '212px', height: '56px', backgroundColor: '#807EFF', color: "white", borderRadius: '75px' }}>Стать автором</NavLink>
+                <NavLink exact to="/profileAuthor" className='button' style={{ position: 'absolute', left: '270px', top: '405px', width: '212px', height: '56px', backgroundColor: '#807EFF', color: "white", borderRadius: '75px' }}>Стать автором</NavLink>
                 <div className='acc-block-2'></div>
                 <div className='acc-text-3'>Подписки</div>
 
@@ -37,7 +37,7 @@ class PersonalAccount extends Component {
                         {this.state.isHovered ? 'Отписаться' : 'Вы подписаны'}
                     </div>
                 }
-                <div className='acc-text-nick-another'>username</div>
+                <NavLink exact to="/authorPage" className='acc-text-nick-another'>username</NavLink>
                 <div className='imgfs-2'></div>
 
 
