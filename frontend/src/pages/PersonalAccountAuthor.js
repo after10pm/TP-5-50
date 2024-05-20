@@ -1,57 +1,58 @@
-import React, {Component} from 'react';
-import {NavLink} from "react-router-dom";
+import React, {Component, useState} from 'react';
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 
-class PersonalAccountAuthor extends Component {
-    state = {
-        isUnsubscribeVisible: false,
-        isHovered: false
-    }
-
-    handleUnsubscribe = () => {
-        this.setState({ isUnsubscribeVisible: !this.state.isUnsubscribeVisible });
-    }
-    handleMouseEnter = () => {
-        this.setState({ isHovered: true });
-    }
-    handleMouseLeave = () => {
-        this.setState({ isHovered: false });
-    }
-    render() {
-        return (
-            <div className='header'>
-                <NavLink exact to="/" className='brand'>SocialSphere</NavLink>
-                <div className='button' style={{position: 'absolute', left: '1660px', width: '215px'}}>0Nickname0</div>
-                <div className='imgfs'></div>
-                <div className='block-acc'></div>
-                <div className='imgfs'
-                     style={{position: 'absolute', left: '305px', top: '160px', width: '160px', height: '160px'}}></div>
-                <div className='acc-text-nick'>0Nickname0</div>
-                <div className='acc-text-email'>email.email@mail.ru</div>
-                <NavLink exact to="/blogEditing" className='button' style={{position: 'absolute', left: '256px', top:'405px', width: '235px', height:'56px', backgroundColor:'#807EFF', color:"white", borderRadius:'75px'}}>Редактирование блога</NavLink>
-                <div className='acc-text-2'>Изменить данные</div>
+function PersonalAccountAuthor() {
+    const location = useLocation();
+    const user = location.state.user;
+    const [isUnsubscribeVisible, setIsUnsubscribeVisible] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const history = useNavigate();
 
 
-                <div className='acc-block-2'></div>
-                <div className='acc-text-3'>Подписки</div>
+    const handleUnsubscribe = () => {
+        setIsUnsubscribeVisible(!isUnsubscribeVisible);
+    };
 
-                {this.state.isUnsubscribeVisible ?
-                    <div className='acc-button-unscribe' onClick={this.handleUnsubscribe} style={{backgroundColor: this.state.isHovered ? '#807EFF' : '#FF6F6F'}}>Подписаться</div> :
-                    <div className='acc-button-info' onClick={this.handleUnsubscribe} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} style={{backgroundColor: this.state.isHovered ? '#FF6F6F' : '', color:this.state.isHovered ? '#FFFFFF' : ''}}>
-                        {this.state.isHovered ? 'Отписаться' : 'Вы подписаны'}
-                    </div>
-                }
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
 
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+    const handleNavigateToChangeBlog = () => {
+        const user = location.state.user
 
-                <NavLink exact to="/authorPage" className='acc-text-nick-another'>username</NavLink>
-                <div className='imgfs-2'></div>
+        history('/blogEditing', { state: {user}  });
+    };
 
+    return (
+        <div className='header'>
+            <NavLink exact to="/" className='brand'>SocialSphere</NavLink>
+            <div className='button' style={{position: 'absolute', left: '1660px', width: '215px'}}>{user.name}</div>
+            <div className='imgfs'></div>
+            <div className='block-acc'></div>
+            <div className='imgfs' style={{position: 'absolute', left: '305px', top: '160px', width: '160px', height: '160px'}}></div>
+            <div className='acc-text-nick'>{user.name}</div>
+            <div className='acc-text-email'>{user.email}</div>
 
-                {/*<div className='acc-text-nick-another'>username</div>*/}
-                {/*<div className='imgfs-2'></div>*/}
+            <div className='button' onClick={handleNavigateToChangeBlog} style={{position: 'absolute', left: '256px', top:'405px', width: '235px', height:'56px', backgroundColor:'#807EFF', color:"white", borderRadius:'75px'}}>Редактирование блога</div>
+            <div className='acc-text-2'>Изменить данные</div>
 
-            </div>
-        );
-    }
+            <div className='acc-block-2'></div>
+            <div className='acc-text-3'>Подписки</div>
+
+            {isUnsubscribeVisible ?
+                <div className='acc-button-unscribe' onClick={handleUnsubscribe} style={{backgroundColor: isHovered ? '#807EFF' : '#FF6F6F'}}>Подписаться</div> :
+                <div className='acc-button-info' onClick={handleUnsubscribe} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{backgroundColor: isHovered ? '#FF6F6F' : '', color: isHovered ? '#FFFFFF' : ''}}>
+                    {isHovered ? 'Отписаться' : 'Вы подписаны'}
+                </div>
+            }
+
+            <NavLink exact to="/authorPage" className='acc-text-nick-another'>username</NavLink>
+            <div className='imgfs-2'></div>
+        </div>
+    );
 }
 
 export default PersonalAccountAuthor;

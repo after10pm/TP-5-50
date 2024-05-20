@@ -16,28 +16,52 @@ import AdminAccounts from "./AdminAccounts";
 import BlockCategory from "../components/blockCategory";
 import CategoryAdmins from "./categoryAdmins";
 import ServicePanel from "./ServicePanel";
+import Testusers from "./testusers";
+import axios from "axios";
 
-function App() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route exact path="/" element={<MainMenuPage/>} />
-                <Route path="/authorization" element={<Authorization/>} />
-                <Route path="/register" element={<Register/>} />
-                <Route path="/rules" element={<Rules/>} />
-                <Route path="/profile" element={<PersonalAccount/>} />
-                <Route path="/profileAuthor" element={<PersonalAccountAuthor/>} />
-                <Route path="/blogEditing" element={<BlogEditing/>} />
-                <Route path="/authorPage" element={<AuthorPage/>} />
-                <Route path="/category" element={<Category/>} />
-                <Route path="/adminAccounts" element={<AdminAccounts/>} />
-                <Route path="/categoryAdmins" element={<CategoryAdmins/>} />
-                <Route path="/ServicePanel" element={<ServicePanel/>} />
+class App extends React.Component{
+    state = {details:[], }
+    componentDidMount() {
+        let data;
+        axios.get("http://localhost:8000")
+            .then(res =>{
+            data = res.data;
+            this.setState({
+                details: data
+            });
 
-            </Routes>
-        </BrowserRouter>
+        })
+            .catch(err =>{
+                console.log(err);
+            })
 
-    );
+    }
+
+    render() {
+
+        return(
+            <BrowserRouter>
+                <Routes>
+                    <Route exact path="/" element={<MainMenuPage/>} />
+                    <Route path="/authorization" element={<Authorization/>} />
+                    <Route path="/register" element={<Register/>} />
+                    <Route path="/rules" element={<Rules/>} />
+                    <Route path="/profile" element={<PersonalAccount/>} />
+                    <Route path="/profileAuthor" element={<PersonalAccountAuthor/>} />
+                    <Route path="/blogEditing" element={<BlogEditing/>} />
+                    <Route path="/authorPage" element={<AuthorPage/>} />
+                    <Route path="/category" element={<Category/>} />
+                    <Route path="/adminAccounts" element={<AdminAccounts/>} />
+                    <Route path="/categoryAdmins" element={<CategoryAdmins/>} />
+                    <Route path="/ServicePanel" element={<ServicePanel/>} />
+                    
+                </Routes>
+            </BrowserRouter>
+
+            )
+
+
+    }
 }
 
 export default App;
