@@ -5,7 +5,7 @@ import BlockAcc from "../components/BlockAcc";
 import React, { useState } from 'react';
 import Post from "../components/Post";
 
-function PersonalAccount() {
+function PersonalAccount(props) {
     const history = useNavigate();
     const [isUnsubscribeVisible, setIsUnsubscribeVisible] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
@@ -16,8 +16,7 @@ function PersonalAccount() {
         setIsUnsubscribeVisible(!isUnsubscribeVisible);
     };
     const handleNavigateToAuthor = () => {
-        const user = location.state.user
-        console.log(user)
+        const user = props.user
         history('/profileAuthor', { state: {user}  });
     };
 
@@ -34,9 +33,9 @@ function PersonalAccount() {
     return (
         <div className='header'>
             <NavLink exact to="/" className='brand'>SocialSphere</NavLink>
-            <div className='button' style={{ position: 'absolute', left: '1660px', width: '215px' }}>{location.state.user.name}</div>
+            <div className='button' style={{ position: 'absolute', left: '1660px', width: '215px' }}>{props.user.name}</div>
             <div className='imgfs'></div>
-            <BlockAcc user={location.state.user} />
+            <BlockAcc user={props.user} />
             <div className='button'  onClick={handleNavigateToAuthor} style={{ position: 'absolute', left: '270px', top: '405px', width: '212px', height: '56px', backgroundColor: '#807EFF', color: "white", borderRadius: '75px' }}>Стать автором</div>
             <div className='acc-block-2'></div>
             <div className='acc-text-3'>Подписки</div>

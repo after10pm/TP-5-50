@@ -23,8 +23,7 @@ function Register() {
     };
     const history = useNavigate();
 
-    const handleRegister = () => {
-
+    const handleSubmitForm = () => {
         const email = document.getElementById("email").value;
         const name = document.getElementById("name").value;
         const password = document.getElementById("password").value;
@@ -39,7 +38,6 @@ function Register() {
             window.alert('Пароли не совпадают. Пожалуйста, убедитесь, что пароли совпадают.');
             return;
         }
-
         const formatDate = (date) => {
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -48,11 +46,21 @@ function Register() {
         };
         const formattedDate = selectedDate ? formatDate(selectedDate) : null;
 
-        axios.post('http://localhost:8000/users/post', { email, name, password, date_of_birth: formattedDate })
+        axios.post('http://localhost:8000/api/register/', { email, name, password, date_of_birth: formattedDate })
             .then(response => {
+
+                if (response.status !== 201) return
+
+                localStorage.setItem('accessToken', response.data.access);
+
+                localStorage.setItem('refreshToken', response.data.refresh);
+
                 console.log('Пользователь успешно зарегистрирован');
                 history('/authorization');
+
+
             })
+
             .catch(error => {
                 if (error.response && error.response.data && error.response.data.error) {
                     const errorMessage = error.response.data.error;
@@ -61,7 +69,48 @@ function Register() {
                     window.alert('Произошла ошибка при регистрации пользователя.');
                 }
             });
-    };
+
+    }
+
+    // const handleRegister = () => {
+    //
+    //     const email = document.getElementById("email").value;
+    //     const name = document.getElementById("name").value;
+    //     const password = document.getElementById("password").value;
+    //     const confirmPassword = document.getElementById("password-confirm").value;
+    //
+    //     if (!email || !name || !password || !confirmPassword) {
+    //         window.alert('Не должно быть пустых полей');
+    //         return;
+    //     }
+    //
+    //     if (password !== confirmPassword) {
+    //         window.alert('Пароли не совпадают. Пожалуйста, убедитесь, что пароли совпадают.');
+    //         return;
+    //     }
+    //
+    //     const formatDate = (date) => {
+    //         const year = date.getFullYear();
+    //         const month = String(date.getMonth() + 1).padStart(2, '0');
+    //         const day = String(date.getDate()).padStart(2, '0');
+    //         return `${year}-${month}-${day}`;
+    //     };
+    //     const formattedDate = selectedDate ? formatDate(selectedDate) : null;
+    //
+    //     axios.post('http://localhost:8000/api/users/post', { email, name, password, date_of_birth: formattedDate })
+    //         .then(response => {
+    //             console.log('Пользователь успешно зарегистрирован');
+    //             history('/authorization');
+    //         })
+    //         .catch(error => {
+    //             if (error.response && error.response.data && error.response.data.error) {
+    //                 const errorMessage = error.response.data.error;
+    //                 window.alert(errorMessage);
+    //             } else {
+    //                 window.alert('Произошла ошибка при регистрации пользователя.');
+    //             }
+    //         });
+    // };
 
     return (
         <div className='body-reg'>
@@ -101,7 +150,7 @@ function Register() {
             <div className='text-in'> У вас есть аккаунт?</div>
 
             <NavLink exact to="/authorization" className='text-in' style={{left:'1020px', color:'#807EFF'}}>Войти</NavLink>
-            <div className='button-registr' onClick={handleRegister}>Зарегистрироваться</div>
+            <div className='button-registr' onClick={handleSubmitForm}>Зарегистрироваться</div>
         </div>
     );
 }

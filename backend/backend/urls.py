@@ -15,6 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, re_path, include
+from rest_framework_simplejwt.views import TokenRefreshView
+
 from app import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -22,9 +24,17 @@ from django.conf.urls.static import static
 
 from django.views.generic import TemplateView
 
+from app.views import RegistrationAPIView, LoginAPIView
+
 urlpatterns = [
-    path('', views.UserView.as_view(), name='user-view'),
-    path('users/post', views.UserView.as_view(), name='user-post'),
-    path('users/change/<int:user_id>/', views.UserView.as_view(), name='user-change'),
-    path('users/delete/<int:user_id>/', views.UserView.as_view(), name='user-delete'),
+    path('', views.UsersView.as_view(), name='user-view'),
+    path('api/users/change/<int:id>/', views.UsersView.as_view(), name='user-change'),
+    path('api/users/delete/<int:id>/', views.UsersView.as_view(), name='user-delete'),
+    path('api/users/<int:id>/', views.UsersView.as_view(), name='user-detail'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register', RegistrationAPIView.as_view()),
+    path('login', LoginAPIView.as_view()),
+    path('user', views.UserView.as_view()),
+    path('logout', views.LogoutView.as_view()),
+
 ]

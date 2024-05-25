@@ -9,27 +9,36 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
+import os
+
+from environs import Env
+from dotenv import load_dotenv
+from dotenv import find_dotenv
+
+env = Env()
+load_dotenv(find_dotenv())
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@59&@o*os54$n1_2!g^j7w8m=j2mf@dn9^esergxy1=1^cah8y'
+SECRET_KEY = env('SECRET_KEY', 'django-insecure-@59&@o*os54$n1_2!g^j7w8m=j2mf@dn9^esergxy1=1^cah8y')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", ("localhost", "127.0.0.1"))
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -56,21 +65,40 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
-    ]
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+
+    ],
+
 }
+CORS_ORIGINAL_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000"
 ]
-CORS_ORIGINAL_ALL = True
+
 
 ROOT_URLCONF = 'backend.urls'
+
+SIMPLE_JWT = {
+
+    'ROTATE_REFRESH_TOKENS': True,
+
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
+
+}
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -91,9 +119,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbtp',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': '01122003q',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': 5432,
     }
@@ -132,6 +160,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTH_USER_MODEL = 'app.User'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

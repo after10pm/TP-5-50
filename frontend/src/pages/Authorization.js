@@ -2,6 +2,8 @@ import React, {Component, useEffect, useState} from 'react';
 import '../components/Register.css';
 import {NavLink, useNavigate} from "react-router-dom";
 import axios from "axios";
+import {SyntheticEvent} from "react";
+import {redirect} from "react-router-dom";
 
 
 const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
@@ -14,6 +16,7 @@ function Authorization (props)  {
     const [isEmailValid, setIsEmailValid] = useState(true);
     const [isPasswordValid, setIsPasswordValid] = useState(false);
     const [details, setDetails] = useState([]);
+    const [redirectTo, setRedirect] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,15 +45,28 @@ function Authorization (props)  {
         setIsPasswordValid(isValidPassword);
     };
 
-    const handleClick = () => {
-        const user = details.find(user => user.email === email && user.password === password);
-        if (!user) {
-            window.alert('Неправильная почта или пароль');
-        } else {
-            history('/profile', { state: { user } });
-        }
-    };
+    const submit = async (e: SyntheticEvent) => {
+        e.preventDefault();
 
+        const response = await fetch('http://localhost:8000/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
+
+        if (response.ok) {
+            setRedirect(true);
+        } else {
+            alert('Неправильный email или пароль');
+        }
+    }
+    if (redirectTo) {
+        history('/my_profile');
+    }
 
     return (
         <div class='body-reg'>
@@ -78,7 +94,7 @@ function Authorization (props)  {
                 onChange={handlePasswordChange}
             />
 
-            <div onClick={handleClick}
+            <div onClick={submit}
                  className="button-registr"
                  style={{position: 'absolute', top: '510px'}}> Войти
             </div>

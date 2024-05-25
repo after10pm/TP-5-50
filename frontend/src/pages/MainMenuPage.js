@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import MainPage from "../components/MainPage";
 import MainMenu from "../components/MainMenu";
 import Fotter from "../components/Fotter";
@@ -12,7 +12,7 @@ function MainMenuPage() {
                 <MainPage/>
                 <MainMenu/>
                 <Fotter/>
-            </div>
+                </div>
 
 
 
