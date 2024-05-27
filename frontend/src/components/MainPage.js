@@ -3,17 +3,26 @@ import './Header.css'
 import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
 import Register from "../pages/Register";
 
-export default class MainPage extends Component {
-    render() {
-        return (
-            <div className='header'>
-                <NavLink exact to="/" className="brand">SocialSphere</NavLink>
-                <NavLink exact to="/authorization" className='button'>Вход</NavLink>
-                <NavLink exact to="/register" className='button-reg'>Регистрация</NavLink>
-
-            </div>
 
 
-        );
+function MainPage () {
+    const logout = async () => {
+        await fetch('http://localhost:8000/logout', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+        });
+        window.location.reload();
     }
+    return (
+        <div className='header'>
+
+            <NavLink exact to="/" className="brand">SocialSphere</NavLink>
+            <NavLink exact to="/" className="button" style={{left:"1000px"}} onClick={logout}>Logout</NavLink>
+            <NavLink exact to="/authorization" className='button'>Вход</NavLink>
+            <NavLink exact to="/register" className='button-reg'>Регистрация</NavLink>
+        </div>
+    );
 }
+
+export default MainPage;

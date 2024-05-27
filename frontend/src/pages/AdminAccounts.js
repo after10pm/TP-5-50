@@ -35,7 +35,7 @@ class AdminAccounts extends Component {
                         }
                         return user;
                     });
-                    this.setState({ details: updatedDetails }); // Обновляем состояние компонента
+                    this.setState({ details: updatedDetails });
                 })
                 .catch(error => {
                     console.error('Ошибка при блокировке пользователя:', error);

@@ -129,6 +129,17 @@ class UserView(APIView):
 
         return Response(serializer.data)
 
+    def put(self, request, id):
+        try:
+            user = User.objects.get(id=id)
+        except User.DoesNotExist:
+            return Response({'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        user.author_status = True
+        user.save()
+
+        return Response({'message': 'Пользователь успешно обновлен'})
+
 
 class LogoutView(APIView):
     def post(self, request):
