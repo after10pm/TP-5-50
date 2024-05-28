@@ -27,7 +27,7 @@ class AdminAccounts extends Component {
     handleBlockUser = (index) => {
         const user = this.state.details[index];
         if (!user.is_blocked) {
-            axios.put(`http://localhost:8000/api/users/change/${user.user_id}/`, { action: 'block' })
+            axios.put(`http://localhost:8000/api/users/change/${user.id}/`, { action: 'block' })
                 .then(response => {
                     const updatedDetails = this.state.details.map((user, i) => {
                         if (i === index) {
@@ -46,7 +46,7 @@ class AdminAccounts extends Component {
     handleUnblockUser = (index) => {
         const user = this.state.details[index];
 
-        axios.put(`http://localhost:8000/api/users/change/${user.user_id}/`, { action: 'unblock' })
+        axios.put(`http://localhost:8000/api/users/change/${user.id}/`, { action: 'unblock' })
             .then(response => {
                 const updatedDetails = this.state.details.map((item, i) => {
                     if (i === index) {

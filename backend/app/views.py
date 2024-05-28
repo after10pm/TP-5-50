@@ -7,18 +7,23 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from app.models import User
-from app.serializers import UserSerializer
+from app.models import User, Post, Category, CategoryUser, Comment, Like, Subscription
+from app.serializers import UserSerializer, PostSerializer, CategorySerializer, CategoryUserSerializer, \
+    CommentSerializer, LikeSerializer, SubSerializer
+
+from django.dispatch import receiver
+
+from django.db.models.signals import post_save, post_delete
 
 
 class UsersView(APIView):
-    def get(self, request, id=None):  # Делаем user_id опциональным параметром
+    def get(self, request, id=None):
         if id is not None:
             user = User.objects.get(pk=id)
             serializer = UserSerializer(user)
             return Response(serializer.data)
         else:
-            # Логика для получения всех пользователей
+
             users = User.objects.all()
             serializer = UserSerializer(users, many=True)
             return Response(serializer.data)
@@ -151,3 +156,142 @@ class LogoutView(APIView):
         }
         return response
 
+
+class PostView(APIView):
+    def get(self, request):
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = PostSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class CategoryView(APIView):
+    def get(self, request):
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CategorySerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def put(self, request, category_id):
+        category = Category.objects.get(pk=category_id)
+        serializer = CategorySerializer(category, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+
+class CategoryViewDetail(APIView):
+    def delete(self, request, category_id):
+        category = Category.objects.get(pk=category_id)
+        category.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CategoryUserView(APIView):
+    def get(self, request):
+        category_users = CategoryUser.objects.all()
+        serializer = CategoryUserSerializer(category_users, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CategoryUserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class CommentView(APIView):
+    def get(self, request):
+        comments = Comment.objects.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CommentSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class CommentDetailView(APIView):
+    def delete(self, request, comment_id):
+        comment = Comment.objects.get(pk=comment_id)
+        comment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class LikeView(APIView):
+    def get(self, request):
+        likes = Like.objects.all()
+        serializer = LikeSerializer(likes, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = LikeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class LikeDetailView(APIView):
+    def delete(self, request):
+        like_id = request.data.get('like_id')
+        like = Like.objects.get(pk=like_id)
+        like.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@receiver(post_save, sender=Like)
+@receiver(post_delete, sender=Like)
+def update_like_count(sender, instance, **kwargs):
+    post_id = instance.post_id
+    like_count = Like.objects.filter(post_id=post_id).count()
+    Post.objects.filter(post_id=post_id).update(like_count=like_count)
+
+
+class SubscriptionView(APIView):
+    def get(self, request):
+        subscriptions = Subscription.objects.all()
+        serializer = SubSerializer(subscriptions, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        author_id = request.data.get('author')
+        subscriber_id = request.data.get('subscriber')
+        serializer = SubSerializer(data=request.data)
+
+        if author_id == subscriber_id:
+            return Response({"error": "Author and subscriber cannot be the same."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class SubscriptionDetailView(APIView):
+    def delete(self, request):
+        sub_id = request.data.get('sub_id')
+        subscription = Subscription.objects.get(pk=sub_id)
+        subscription.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class SubscriptionCountView(APIView):
+    def get(self, request):
+        author_id = request.data.get('author_id')
+        subscriber_count = Subscription.objects.filter(author_id=author_id).count()
+
+        return Response({"author_id": author_id, "subscriber_count": subscriber_count})

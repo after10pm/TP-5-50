@@ -1,9 +1,9 @@
 import React, {Component, useState} from 'react';
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
 
-function PersonalAccountAuthor() {
+function PersonalAccountAuthor(props) {
     const location = useLocation();
-    const user = location.state.user;
+    const user = props.user;
     const [isUnsubscribeVisible, setIsUnsubscribeVisible] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const history = useNavigate();

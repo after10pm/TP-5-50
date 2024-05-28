@@ -60,12 +60,12 @@ function App() {
                 <Route path="/my_profile" element={<PersonalAccount user={user}/>}/>
 
 
-                <Route path="/blogEditing" element={<BlogEditing/>}/>
-                <Route path="/profile/:userId" element={<AuthorPage/>}/>
-                <Route path="/category" element={<Category/>}/>
-                <Route path="/adminAccounts" element={<AdminAccounts/>}/>
-                <Route path="/categoryAdmins" element={<CategoryAdmins/>}/>
-                <Route path="/ServicePanel" element={<ServicePanel/>}/>
+                <Route path="/blogEditing" element={<BlogEditing user={user}/>}/>
+                <Route path="/profile/:userId" element={<AuthorPage user={user}/>}/>
+                <Route path="/category" element={<Category user={user}/>}/>
+                <Route path="/adminAccounts" element={<AdminAccounts user={user}/>}/>
+                <Route path="/categoryAdmins" element={<CategoryAdmins user={user}/>}/>
+                <Route path="/servicePanel" element={<ServicePanel user={user}/>}/>
             </Routes>
         </BrowserRouter>
     )

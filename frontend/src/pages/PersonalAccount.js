@@ -11,7 +11,7 @@ function PersonalAccount(props) {
     const user = props.user;
     const [isUnsubscribeVisible, setIsUnsubscribeVisible] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
-    const isAuthor = user.author_status; // Assuming user object has a property isAuthor to indicate author status
+    const isAuthor = user.author_status;
     const [isLoading, setIsLoading] = useState(true);
 
 
@@ -35,7 +35,7 @@ function PersonalAccount(props) {
     }, []);
     const handleNavigateToAction = async () => {
         if (isAuthor) {
-            history('/blogEditing', {state: {user}});
+            history('/blogEditing');
         } else {
             try {
                 const response = await fetch(`http://localhost:8000/change/author_status/${user.id}/`, {
