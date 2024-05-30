@@ -4,6 +4,8 @@ from django.db import models
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, AbstractUser
 
+from django.core.exceptions import ValidationError
+
 
 class User(AbstractUser):
     id = models.BigAutoField(primary_key=True)
@@ -22,7 +24,76 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    class Meta:
+        db_table = 'user'
+
+
+class Post(models.Model):
+    post_id = models.BigAutoField(primary_key=True)
+
+    title = models.CharField('title', max_length=100)
+    content = models.CharField('content', max_length=500)
+
+    image = models.ImageField('post_image', default="image")
+
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    publish_date = models.DateField(default=current_date, verbose_name="registration_date")
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    like_count = models.IntegerField('like_count', default=0)
+
+    class Meta:
+        db_table = 'post'
+
+
+class Like(models.Model):
+    like_id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'like'
+        unique_together = ('user', 'post')
+
+
+class Category(models.Model):
+    category_id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        db_table = 'category'
+
+
+class CategoryUser(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'category_user'
+
+
+class Comment(models.Model):
+    comment_id = models.BigAutoField(primary_key=True)
+
+    text = models.CharField(max_length=255)
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    date_posted = models.DateField(default=current_date, verbose_name="Date Posted")
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'comment'
+
+
+class Subscription(models.Model):
+    sub_id = models.BigAutoField(primary_key=True)
+    author = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE)
+    subscriber = models.ForeignKey(User, related_name='subscriber', on_delete=models.CASCADE)
 
 
     class Meta:
-        db_table = 'user'
+        db_table = 'subscription'
+        unique_together = ('author', 'subscriber')
+

@@ -7,7 +7,7 @@ export default class Fotter extends Component {
             <div>
                 <NavLink exact to="/rules" className='fot'>Ознакомиться с правилами сайта</NavLink>
 
-                <NavLink exact to="/ServicePanel" className='fot' style={{left:'-1750px'}}>Служебная панель</NavLink>
+                <NavLink exact to="/servicePanel" className='fot' style={{left:'-1750px'}}>Служебная панель</NavLink>
             </div>
         );
     }

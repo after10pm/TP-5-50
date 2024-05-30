@@ -379,11 +379,17 @@
 
 
 }
+.center-anim {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 .text-under-post{
 
     position: absolute;
-    width: 450px; /* Ширина блока */
-    word-wrap: break-word; /* Перенос текста на новую строку */
+    width: 450px;
+    word-wrap: break-word;
     overflow-wrap: break-word;
     left: 863px;
     top: 512px;

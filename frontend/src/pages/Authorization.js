@@ -1,6 +1,6 @@
 import React, {Component, useEffect, useState} from 'react';
 import '../components/Register.css';
-import {NavLink, useNavigate} from "react-router-dom";
+import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {SyntheticEvent} from "react";
 import {redirect} from "react-router-dom";
@@ -8,7 +8,7 @@ import {redirect} from "react-router-dom";
 
 const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
-function Authorization (props)  {
+function Authorization ()  {
     const history = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -17,19 +17,6 @@ function Authorization (props)  {
     const [isPasswordValid, setIsPasswordValid] = useState(false);
     const [details, setDetails] = useState([]);
     const [redirectTo, setRedirect] = useState(false);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get("http://localhost:8000");
-                setDetails(res.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        fetchData();
-    }, []); // Empty dependencies array to run once on component mount
 
     const handleEmailChange = (event) => {
         const emailValue = event.target.value;
@@ -60,12 +47,17 @@ function Authorization (props)  {
 
         if (response.ok) {
             setRedirect(true);
+
+            window.location.reload()
+
+
         } else {
-            alert('Неправильный email или пароль');
+            window.alert('Неправильный email или пароль');
         }
     }
     if (redirectTo) {
-        history('/my_profile');
+        window.location.reload()
+        history("/my_profile")
     }
 
     return (
