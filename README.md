@@ -46,4 +46,8 @@
 
 [Видеопрезентация промежуточных итогов](https://youtu.be/59j1pXftqzc)
 
+[Презентация предзащита](https://github.com/after10pm/TP-5-50/blob/main/presentation/Презентация-%20предзащита.pdf)
+
+[Видеопрезентация предзащита](https://youtu.be/AeWO6xoKeWs)
+
 
