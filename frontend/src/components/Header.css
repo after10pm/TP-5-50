@@ -53,6 +53,7 @@ body {
     font-size: 18px;
     line-height: 23.58px;
     text-decoration: none;
+    cursor: pointer;
 
     display: flex;
     align-items: center;
