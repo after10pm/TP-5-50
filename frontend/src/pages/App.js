@@ -8,7 +8,7 @@ import Authorization from "./Authorization";
 import Register from "./Register";
 import Rules from "./Rules";
 import PersonalAccount from "./PersonalAccount";
-import PersonalAccountAuthor from "./PersonalAccountAuthor";
+
 import BlogEditing from "./BlogEditing";
 import AuthorPage from "./AuthorPage";
 import Category from "./Category";

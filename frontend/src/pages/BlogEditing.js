@@ -5,8 +5,8 @@ import {Navigate, NavLink, useLocation, useNavigate} from "react-router-dom";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import NewPost from "../components/NewPost";
-import {POSTS} from "../shared/Posts";
 import LoadingAnimation from "../animaiton/LoadingAnimation";
+import axios from "axios";
 
 
 function BlogEditing(props) {
@@ -14,16 +14,45 @@ function BlogEditing(props) {
     const user = props.user;
     const [showNewPost, setShowNewPost] = useState(false);
     const [showButton, setShowButton] = useState(true);
-    const [posts, setPosts] = useState(POSTS); // Предполагается, что POSTS уже определено где-то
+    const [posts, setPosts] = useState([]);
 
     const [isLoading, setIsLoading] = useState(true);
 
     const history = useNavigate();
 
-    const deletePost = (postId) => {
-        const updatedPosts = posts.filter((post) => post.index !== postId);
-        setPosts(updatedPosts);
-        console.log(updatedPosts);
+
+    useEffect(() => {
+        let data;
+
+        const response = axios.get("http://localhost:8000/api/posts/")
+            .then(res => {
+                data = res.data;
+                setPosts(data);
+                console.log(posts)
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    }, []);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 4000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    const deletePost = async (postId) => {
+        try {
+            await axios.delete(`http://localhost:8000/api/posts/delete/${postId}/`); // Удаляем пост на сервере
+            const updatedPosts = posts.filter((post) => post.index !== postId);
+            setPosts(updatedPosts);
+        } catch (error) {
+            console.error('Error deleting post:', error);
+        }
     };
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
@@ -36,12 +65,21 @@ function BlogEditing(props) {
 
         return () => clearTimeout(timer);
     }, []);
-    const addNewPost = (newPost) => {
-        const updatedPosts = [...posts, newPost];
-        setPosts(updatedPosts);
-        console.log(updatedPosts);
-        setShowNewPost(false);
-        setShowButton(true);
+    const addNewPost = async (newPost) => {
+        try {
+            const response = await axios.post('http://localhost:8000/api/posts/', {
+                title: newPost.title,
+                content: newPost.content,
+                user: user.id
+            });
+
+            const updatedPosts = [...posts, response.data];
+            setPosts(updatedPosts);
+            setShowNewPost(false);
+            setShowButton(true);
+        } catch (error) {
+            console.error('Error adding new post:', error);
+        }
     };
 
     const handleCreatePost = () => {
@@ -53,10 +91,9 @@ function BlogEditing(props) {
         <div key={item.index} className='container' style={{position: 'absolute', top: (-500 + item.index * 510) + 'px', left: '0px' }}>
             <Post onDelete={deletePost} index={item.index}
                   title={item.title}
-                  description={item.description}
-                  author={item.author}
+                  content={item.content}
+                  user={user.name}
                   date={item.date}
-                  posts={posts}
             />
         </div>
     ));
@@ -103,7 +140,7 @@ function BlogEditing(props) {
 
                     <div className='acc-text-3' style={{ width: '480px', top: '190px' }}>Редактирование блога</div>
 
-                    {showNewPost && <NewPost addNewPost={addNewPost} posts={posts} />}
+                    {showNewPost && <NewPost addNewPost={addNewPost} posts={posts} user={user} />}
                     <div>
                         {blogPosts}
                     </div>

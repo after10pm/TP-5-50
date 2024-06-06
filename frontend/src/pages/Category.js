@@ -11,7 +11,7 @@ function Category(props) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 700); // Set loading to false after 2 seconds
+        }, 1000); // Set loading to false after 2 seconds
 
         return () => clearTimeout(timer);
     }, []);

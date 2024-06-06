@@ -49,7 +49,7 @@ const CategoryAdmins = (props) => {
             categories[selectedLetter].push(newCategory);
             setState({
                 categories: categories,
-                allWords: Object.values(categories).flat(),
+                allWords: Object.values(categories).flat(), 
                 searchResults: {
                     'А': categories.А,
                     'Б': categories.Б,
@@ -81,7 +81,7 @@ const CategoryAdmins = (props) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 700); // Set loading to false after 2 seconds
+        }, 1000); // Set loading to false after 2 seconds
 
         return () => clearTimeout(timer);
     }, []);

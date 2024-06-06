@@ -1,38 +1,50 @@
-import {Navigate, NavLink, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import '../components/Account.css';
 import BlockAcc from "../components/BlockAcc";
 
 import React, {useEffect, useState} from 'react';
-import Post from "../components/Post";
 import LoadingAnimation from "../animaiton/LoadingAnimation";
+import axios from "axios";
+export default PersonalAccount;
+
 
 function PersonalAccount(props) {
+    const [details, setDetails] = useState([]);
     const history = useNavigate();
     const user = props.user;
-    const [isUnsubscribeVisible, setIsUnsubscribeVisible] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
+    const [unsubscribedUsers, setUnsubscribedUsers] = useState([]);
+    const [hoveredIndices, setHoveredIndices] = useState([]);
     const isAuthor = user.author_status;
     const [isLoading, setIsLoading] = useState(true);
+    const [subs, setSubs] = useState([]);
 
-
-    const handleUnsubscribe = () => {
-        setIsUnsubscribeVisible(!isUnsubscribeVisible);
+    const handleUnsubscribe = (userId) => {
+        axios.delete(`http://localhost:8000/api/subscriptions/delete/${userId}/`)
+            .then(() => {
+                setUnsubscribedUsers([...unsubscribedUsers, userId]);
+            })
+            .catch(error => {
+                console.error('Error unsubscribing:', error);
+            });
+    };
+    const handleSubscribe = (subscriber) => {
+        const data = { author: subscriber.id, user: user.id };
+        axios.post('http://localhost:8000/api/subscriptions/', data)
+            .then(() => {
+                setUnsubscribedUsers(unsubscribedUsers.filter(id => id !== subscriber.id)); // Удаляем из списка после успешного запроса
+            })
+            .catch(error => {
+                console.error('Error subscribing:', error);
+            });
     };
 
-    const handleMouseEnter = () => {
-        setIsHovered(true);
+    const handleMouseEnter = (index) => {
+        setHoveredIndices([...hoveredIndices, index]);
     };
 
-    const handleMouseLeave = () => {
-        setIsHovered(false);
+    const handleMouseLeave = (index) => {
+        setHoveredIndices(hoveredIndices.filter(item => item !== index));
     };
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 700); // Set loading to false after 2 seconds
-
-        return () => clearTimeout(timer);
-    }, []);
     const handleNavigateToAction = async () => {
         if (isAuthor) {
             history('/blogEditing');
@@ -50,11 +62,63 @@ function PersonalAccount(props) {
         }
     };
 
+    useEffect(() => {
+        let data;
+
+        const response = axios.get("http://localhost:8000/api/users/")
+            .then(res => {
+                data = res.data;
+                setDetails(data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    }, []);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 1000); // Set loading to false after 2 seconds
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    const fetchSubscriptions = async () => {
+        try {
+            if (!user || !user.id) {
+                return;
+            }
+            const subscriber_id = user.id;
+            const response = await axios.get(`http://localhost:8000/api/subscriptionsUser/${subscriber_id}/`);
+            if (response.status !== 200) {
+                console.error('Error fetching subscriptions data');
+            }
+            const data = response.data;
+            setSubs(data);
+        } catch (error) {
+            console.error('Error fetching subscriptions:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchSubscriptions();
+    }, [user]);
+
+    const getSubscribedUsers = () => {
+        if (!Array.isArray(subs)) {
+            return [];
+        }
+        const authorIds = subs.map(sub => sub.author);
+
+        return details.filter(user => authorIds.includes(user.id));
+    };
+
     if (user === '') {
         if (isLoading) {
             return (
                 <div className='center-anim'>
-                    <LoadingAnimation />
+                    <LoadingAnimation/>
                 </div>
             )
         } else {
@@ -65,20 +129,21 @@ function PersonalAccount(props) {
             )
 
         }
-
     } else {
-        if (isLoading){
+        if (isLoading) {
             return (
                 <div className='center-anim'>
-                    <LoadingAnimation />
+                    <LoadingAnimation/>
                 </div>
             )
-
         } else {
+            const subscribedUsers = getSubscribedUsers();
+
             return (
                 <div className='header'>
                     <NavLink exact to="/" className='brand'>SocialSphere</NavLink>
-                    <div className='button' style={{position: 'absolute', left: '1660px', width: '215px'}}>{user.name}</div>
+                    <div className='button'
+                         style={{position: 'absolute', left: '1660px', width: '215px'}}>{user.name}</div>
                     <div className='imgfs'></div>
                     <div className='rec' style={{
                         left: '1860px',
@@ -105,23 +170,36 @@ function PersonalAccount(props) {
                     <div className='acc-block-2'></div>
                     <div className='acc-text-3'>Подписки</div>
 
-                    {isUnsubscribeVisible ?
-                        <div className='acc-button-unscribe' onClick={handleUnsubscribe}
-                             style={{backgroundColor: isHovered ? '#807EFF' : '#FF6F6F'}}>Подписаться</div> :
-                        <div className='acc-button-info' onClick={handleUnsubscribe} onMouseEnter={handleMouseEnter}
-                             onMouseLeave={handleMouseLeave}
-                             style={{backgroundColor: isHovered ? '#FF6F6F' : '', color: isHovered ? '#FFFFFF' : ''}}>
-                            {isHovered ? 'Отписаться' : 'Вы подписаны'}
+                    {subscribedUsers.map((subscriber, index) => (
+                        <div key={subscriber.id} style={{position: "absolute", top: 80 * index + 'px'}}>
+                            <NavLink to={`/profile/${subscriber.id}`} className='acc-text-nick-another'>
+                                {subscriber.name}
+                            </NavLink>
+                            <div className='imgfs-2'></div>
+                            {unsubscribedUsers.includes(subscriber.id) ?
+                                <div className='acc-button-unsubscribe' onClick={() => handleUnsubscribe(subscriber.id)}
+                                     style={{backgroundColor: hoveredIndices.includes(index) ? '#FF6F6F' : '#807EFF'}}
+                                     onMouseEnter={() => handleMouseEnter(index)}
+                                     onMouseLeave={() => handleMouseLeave(index)}
+                                >Отписаться</div>
+                                :
+                                <div className='acc-button-info' onClick={() => handleSubscribe(subscriber)}
+                                     style={{
+                                         backgroundColor: hoveredIndices.includes(index) ? '#FF6F6F' : '',
+                                         color: hoveredIndices.includes(index) ? '#FFFFFF' : ''
+                                     }}
+                                     onMouseEnter={() => handleMouseEnter(index)}
+                                     onMouseLeave={() => handleMouseLeave(index)}
+                                >
+                                    {hoveredIndices.includes(index) ? 'Отписаться' : 'Вы подписаны'}
+                                </div>
+                            }
                         </div>
-                    }
-                    <NavLink exact to={isAuthor ? "/profileAuthor" : "/profile/1"}
-                             className='acc-text-nick-another'>{user.username || 'username'}</NavLink>
-                    <div className='imgfs-2'></div>
+                    ))}
+
                 </div>
             );
         }
 
     }
 }
-
-export default PersonalAccount;

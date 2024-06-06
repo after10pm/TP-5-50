@@ -23,6 +23,7 @@ function AuthorPage(props) {
     const getUserById = async (userId) => {
         try {
             const response = await axios.get(`http://localhost:8000/api/users/${userId}/`);
+            console.log(response.data)
             return response.data;
         } catch (err) {
             console.error(err.toJSON());
@@ -33,7 +34,7 @@ function AuthorPage(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://localhost:8000");
+                const res = await axios.get("http://localhost:8000/api/users/");
                 setDetails(res.data);
                 const user = await getUserById(userId);
                 setAuthorUser(user);
@@ -137,7 +138,7 @@ function AuthorPage(props) {
                             <div className='comments' style={{top:'282px',left:'1335px'}}>93</div>
                             <i className="bi bi-chat-right-text comments-mark" style={{top:'278px',left:'1305px'}}></i>
 
-                            <div className='account-text-read' style={{top:'650px', left:"875px"}}>0Nickname0</div>
+                            <div className='account-text-read' style={{top:'650px', left:"875px"}}>{user.name}</div>
 
                             {/*<div className='rec' style={{left: '805px', top: '706px', backgroundColor:'#DFDEFF', width:'21px', height:'21px'}}></div>*/}
                             {/*<div className='account-check-mark'/>*/}

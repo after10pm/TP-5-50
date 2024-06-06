@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 
-function NewPost ({addNewPost, posts}){
+function NewPost ({ addNewPost, posts, user }) {
     const [postTitle, setPostTitle] = useState('');
     const [postText, setPostText] = useState('');
 
@@ -24,17 +24,14 @@ function NewPost ({addNewPost, posts}){
         }
 
         const newPost = {
-            index: posts.length + 1,
             title: postTitle,
-            description: postText,
-            author: '0Nickname0',
-            date: new Date().toLocaleDateString()
+            content: postText,
+            user: user.name,
         };
 
         handleAddFromHide();
         addNewPost(newPost);
     };
-
     return (
         <div>
             <div className='block-create-post'></div>
