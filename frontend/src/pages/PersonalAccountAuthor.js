@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useRef, useState} from 'react';
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
 
 function PersonalAccountAuthor(props) {
@@ -7,7 +7,38 @@ function PersonalAccountAuthor(props) {
     const [isUnsubscribeVisible, setIsUnsubscribeVisible] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const history = useNavigate();
+    const [isVisible, setIsVisible] = useState(false);
+    const markClick = () => {
+        setIsVisible(!isVisible);
+    }
+    const checkMarkRef = useRef();
+    const menuRef = useRef();
+    useEffect(() =>{
+        function clickOutsideMenu(event) {
+            if (menuRef.current && !checkMarkRef.current.contains(event.target) && !menuRef.current.contains(event.target)){
+                setIsVisible(false);
+            }
+        }
+        document.addEventListener('click', clickOutsideMenu);
+        return () => {
+            document.removeEventListener('click', clickOutsideMenu);
+        };
+    }, []);
+    const redirectToMyAccount = () => {
+        history('/my_profile');
+    };
+    const redirectToCategory = () => {
+        history('/category');
+    };
+    const logout = async () => {
+        await fetch('http://localhost:8000/logout', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+        });
+        window.location.reload()
 
+    }
 
     const handleUnsubscribe = () => {
         setIsUnsubscribeVisible(!isUnsubscribeVisible);

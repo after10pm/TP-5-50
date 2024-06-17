@@ -90,7 +90,7 @@
     transform: rotate(-45deg);
     border-top: none;
     border-right: none;
-
+    cursor: pointer;
 }
 .account-text-comment{
     /* Хинаточка, продолжай нас радовать своим твореством!!!! <3 */

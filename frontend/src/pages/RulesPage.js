@@ -1,12 +1,11 @@
 import React, {Component, useEffect, useRef, useState} from 'react';
-import "../components/Category.css";
-import BlockCategory from "../components/blockCategory";
-import {Navigate, NavLink, useNavigate} from "react-router-dom";
-import LoadingAnimation from "../animaiton/LoadingAnimation";
+import MainPage from "../components/MainPage";
+import '../components/Rules.css';
+import {NavLink, useNavigate} from "react-router-dom";
+import Rules from "../components/Rules";
 
-function Category(props) {
-    const user = props.user;
-    const [isLoading, setIsLoading] = useState(true);
+
+function RulesPage(props) {
     const history = useNavigate();
     const [isVisible, setIsVisible] = useState(false);
     const markClick = () => {
@@ -14,12 +13,13 @@ function Category(props) {
     }
     const checkMarkRef = useRef();
     const menuRef = useRef();
-    useEffect(() =>{
+    useEffect(() => {
         function clickOutsideMenu(event) {
-            if (menuRef.current && !checkMarkRef.current.contains(event.target) && !menuRef.current.contains(event.target)){
+            if (menuRef.current && !checkMarkRef.current.contains(event.target) && !menuRef.current.contains(event.target)) {
                 setIsVisible(false);
             }
         }
+
         document.addEventListener('click', clickOutsideMenu);
         return () => {
             document.removeEventListener('click', clickOutsideMenu);
@@ -38,51 +38,18 @@ function Category(props) {
             credentials: 'include',
         });
         window.location.reload()
+
     }
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 700); // Set loading to false after 2 seconds
+    if (props.user !== '') {
+        return (
+            <div>
+                <div className='header'>
 
-        return () => clearTimeout(timer);
-    }, []);
-
-
-
-
-    if (user === '') {
-        if (isLoading) {
-            return (
-                <div className='center-anim'>
-                    <LoadingAnimation/>
-                </div>
-            )
-        } else {
-            return (
-                <div>
-                    <Navigate to={"/authorization"}/>
-                </div>
-            )
-
-        }
-
-    } else {
-        if (isLoading) {
-            return (
-                <div className='center-anim'>
-                    <LoadingAnimation/>
-                </div>
-            )
-
-        } else {
-            return (
-                <div>
-                    <div className='header'>
-                        <NavLink exact to="/" className="brand">SocialSphere</NavLink>
+                    <NavLink exact to="/" className='brand'>SocialSphere</NavLink>
+                    <div className='button'
+                         style={{position: 'absolute', left: '1660px', width: '215px'}}>{props.user.name}
                     </div>
 
-                    <NavLink exact to="/my_profile" className='button'
-                             style={{position: 'absolute', left: '1660px', width: '215px'}}>{props.user.name}</NavLink>
                     <div className='imgfs'></div>
                     <div className='rec' style={{
                         left: '1860px',
@@ -98,22 +65,28 @@ function Category(props) {
                         top: '10px',
                         paddingTop: '10px',
                         right: '7px',
-                        width: '236px',
-                        height: '115px',
+                        width: '216px',
+                        height: '110px',
                     }}>
                         <div className='sub-menu' onClick={redirectToMyAccount}>{props.user.name}</div>
                         <div className='sub-menu' onClick={redirectToCategory}>Категории</div>
                         <div className='sub-menu' onClick={logout}>Выйти из аккаунта</div>
                     </div>}
-
-
-                    <BlockCategory/>
-                    <div className='category-main-text'>Категории</div>
                 </div>
-            );
-        }
+                <Rules/>
+            </div>
+        );
+    } else {
+        return (
+
+            <div>
+                <Rules/>
+
+            </div>
+
+
+        );
 
     }
 }
-
-export default Category;
+    export default RulesPage;

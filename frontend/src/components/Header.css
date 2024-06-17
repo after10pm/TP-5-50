@@ -79,3 +79,28 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+.menu{
+    overflow-x: hidden;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    border-radius: 22.5px;
+    background-color: #FFFFFF;
+    color: #807EFF;
+    font-weight: 600;
+    font-family: "NT SOM", sans-serif;
+    font-size: 18px;
+    line-height: 23.58px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.sub-menu{
+    margin: 3%;
+    cursor: pointer;
+
+}
+

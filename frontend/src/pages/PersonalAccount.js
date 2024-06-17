@@ -1,8 +1,8 @@
-import {Navigate, NavLink, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, NavLink, redirect, useLocation, useNavigate} from "react-router-dom";
 import '../components/Account.css';
 import BlockAcc from "../components/BlockAcc";
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Post from "../components/Post";
 import LoadingAnimation from "../animaiton/LoadingAnimation";
 
@@ -13,6 +13,39 @@ function PersonalAccount(props) {
     const [isHovered, setIsHovered] = useState(false);
     const isAuthor = user.author_status;
     const [isLoading, setIsLoading] = useState(true);
+    const [isVisible, setIsVisible] = useState(false);
+    const markClick = () => {
+        setIsVisible(!isVisible);
+    }
+    const checkMarkRef = useRef();
+    const menuRef = useRef();
+    useEffect(() =>{
+        function clickOutsideMenu(event) {
+            if (menuRef.current && !checkMarkRef.current.contains(event.target) && !menuRef.current.contains(event.target)){
+                setIsVisible(false);
+            }
+        }
+        document.addEventListener('click', clickOutsideMenu);
+        return () => {
+            document.removeEventListener('click', clickOutsideMenu);
+        };
+    }, []);
+    const redirectToMyAccount = () => {
+        history('/my_profile');
+    };
+    const redirectToCategory = () => {
+        history('/category');
+    };
+    const logout = async () => {
+        await fetch('http://localhost:8000/logout', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+        });
+        window.location.reload()
+
+    }
+
 
 
     const handleUnsubscribe = () => {
@@ -87,8 +120,21 @@ function PersonalAccount(props) {
                         width: '21px',
                         height: '21px'
                     }}></div>
-                    <div className='account-check-mark'
+                    <div ref={checkMarkRef} className='account-check-mark' onClick={markClick}
                          style={{left: '1866.5px', top: '30px', width: '6px', height: '6px'}}></div>
+                    {isVisible && <div ref={menuRef} className='menu' style={{
+                        position: 'absolute',
+                        top: '10px',
+                        paddingTop: '10px',
+                        right: '7px',
+                        width: '216px',
+                        height: '110px',
+                    }}>
+                        <div className='sub-menu' onClick={redirectToMyAccount}>{user.name}</div>
+                        <div className='sub-menu' onClick={redirectToCategory}>Категории</div>
+                        <div className='sub-menu' onClick={logout}>Выйти из аккаунта</div>
+                    </div>}
+
                     <BlockAcc user={user}/>
                     <div className='button' onClick={handleNavigateToAction} style={{
                         position: 'absolute',
@@ -114,7 +160,7 @@ function PersonalAccount(props) {
                             {isHovered ? 'Отписаться' : 'Вы подписаны'}
                         </div>
                     }
-                    <NavLink exact to={isAuthor ? "/profileAuthor" : "/profile/1"}
+                    <NavLink exact to={"/profile/1"}
                              className='acc-text-nick-another'>{user.username || 'username'}</NavLink>
                     <div className='imgfs-2'></div>
                 </div>

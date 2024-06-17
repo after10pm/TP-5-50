@@ -6,7 +6,7 @@ import reportWebVitals from './Test/reportWebVitals';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MainMenuPage from "./pages/MainMenuPage";
 import Register from "./pages/Register";
-import Rules from "./pages/Rules";
+import Rules from "./pages/RulesPage";
 import Authorization from "./pages/Authorization";
 import PersonalAccount from "./pages/PersonalAccount";
 

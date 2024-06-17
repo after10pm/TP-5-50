@@ -6,9 +6,9 @@ class BlockCategory extends Component {
     constructor(props) {
         super(props);
         const categories = {
-            А: ['арбуз', 'абрикос', 'атлас', 'анимация', 'ахтунг'],
-            Б: ['блог', 'бензин', 'берлога', 'бактерия', 'бенефит'],
-            В: ['вагон', 'вакуум', 'вклад', 'вояж', 'валидация']
+            А: ['Автотесты', 'Анимации в react'],
+            Б: ['Блог'],
+            В: ['Валидация']
         };
         this.state = {
             categories: categories,
