@@ -30,7 +30,7 @@ function App() {
     useEffect(() => {
         (
             async () => {
-                const response = await fetch('http://localhost:8000/user', {
+                const response = await fetch('http://localhost:8000/user/', {
                     headers: {'Content-Type': 'application/json'},
                     credentials: 'include',
                 });
@@ -46,7 +46,7 @@ function App() {
 
             }
         )();
-    });
+    }, [user.id]);
 
 
     return (

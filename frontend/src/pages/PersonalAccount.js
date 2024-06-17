@@ -19,7 +19,7 @@ function PersonalAccount(props) {
     const [subs, setSubs] = useState([]);
 
     const handleUnsubscribe = (userId) => {
-        axios.delete(`http://localhost:8000/api/subscriptions/delete/${userId}/`)
+        axios.delete(`http://localhost:8000/subscriptions/delete/${userId}/`)
             .then(() => {
                 setUnsubscribedUsers([...unsubscribedUsers, userId]);
             })
@@ -29,7 +29,7 @@ function PersonalAccount(props) {
     };
     const handleSubscribe = (subscriber) => {
         const data = { author: subscriber.id, user: user.id };
-        axios.post('http://localhost:8000/api/subscriptions/', data)
+        axios.post('http://localhost:8000/subscriptions/', data)
             .then(() => {
                 setUnsubscribedUsers(unsubscribedUsers.filter(id => id !== subscriber.id)); // Удаляем из списка после успешного запроса
             })

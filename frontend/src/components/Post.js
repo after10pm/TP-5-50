@@ -1,20 +1,43 @@
 import React, {Component, useState} from 'react';
 import "bootstrap-icons/font/bootstrap-icons.css";
+import axios from "axios";
 
 function Post(props) {
     const [isPostDeleted, setIsPostDeleted] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [editedText, setEditedText] = useState(props.description);
+    const [editedText, setEditedText] = useState(props.content);
 
-    const handleDeletePost = () => {
+    const handleDeletePost = async () => {
+        const postId = props.post_id
+        console.log(postId)
         const confirmDelete = window.confirm("Вы действительно хотите удалить пост?");
         if (confirmDelete) {
-            props.onDelete(props.index);
-            setIsPostDeleted(true);
+            try {
+                await axios.delete(`http://localhost:8000/posts/${postId}/`); // Удаляем пост на сервере
+            } catch (error) {
+                console.error('Error deleting post:', error);
+            }
+        }
+    };
+    const handleEditPost = async () => {
+        const postId = props.post_id;
+        try {
+            const response = await axios.put(
+                `http://localhost:8000/posts/${postId}/`,
+                { content: editedText }
+            );
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Error updating post:', error);
         }
     };
 
     const toggleEdit = () => {
+        // Проверяем, находится ли компонент в режиме редактирования
+        if (isEditing) {
+            // Если в режиме редактирования, вызываем handleEditPost для сохранения изменений
+            handleEditPost();
+        }
         setIsEditing(!isEditing);
     };
 
@@ -36,8 +59,10 @@ function Post(props) {
                 <div className='imgfs-3'></div>
                 <div className='acc-text-5'>{props.title}</div>
                 {isEditing ? (
+                    <>
                     <textarea className='text-under-post-change' style={{left: '861px', top: '510px'}}
                               value={editedText} onChange={handleChange}/>
+                    </>
                 ) : (
                     <div className='text-under-post'>{editedText}</div>
                 )}

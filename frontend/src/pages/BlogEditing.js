@@ -17,43 +17,28 @@ function BlogEditing(props) {
     const [posts, setPosts] = useState([]);
 
     const [isLoading, setIsLoading] = useState(true);
+    const [postToDelete, setPostToDelete] = useState(null);
 
     const history = useNavigate();
 
 
-    useEffect(() => {
-        let data;
+        useEffect(() => {
+            let data;
+            const user_id = user.id
+            const response = axios.get(`http://localhost:8000/posts/${user_id}/`)
+                .then(res => {
+                    data = res.data;
+                    setPosts(data);
+                    console.log(posts)
 
-        const response = axios.get("http://localhost:8000/api/posts/")
-            .then(res => {
-                data = res.data;
-                setPosts(data);
-                console.log(posts)
+                })
+                .catch(err => {
+                    console.log(err);
+                });
 
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        }, [user.id, posts]);
 
-    }, []);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 4000);
-
-        return () => clearTimeout(timer);
-    }, []);
-
-    const deletePost = async (postId) => {
-        try {
-            await axios.delete(`http://localhost:8000/api/posts/delete/${postId}/`); // Удаляем пост на сервере
-            const updatedPosts = posts.filter((post) => post.index !== postId);
-            setPosts(updatedPosts);
-        } catch (error) {
-            console.error('Error deleting post:', error);
-        }
-    };
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
 
@@ -67,12 +52,13 @@ function BlogEditing(props) {
     }, []);
     const addNewPost = async (newPost) => {
         try {
-            const response = await axios.post('http://localhost:8000/api/posts/', {
+            const response = await axios.post('http://localhost:8000/posts/', {
                 title: newPost.title,
                 content: newPost.content,
-                user: user.id
+                user_id: user.id
             });
 
+            console.log(response.data)
             const updatedPosts = [...posts, response.data];
             setPosts(updatedPosts);
             setShowNewPost(false);
@@ -87,9 +73,9 @@ function BlogEditing(props) {
         setShowButton(false);
     };
 
-    const blogPosts = posts.map((item) => (
-        <div key={item.index} className='container' style={{position: 'absolute', top: (-500 + item.index * 510) + 'px', left: '0px' }}>
-            <Post onDelete={deletePost} index={item.index}
+    const blogPosts = posts.map((item, index) => (
+        <div key={item.index} className='container' style={{position: 'absolute', top: (index * 510) + 'px', left: '0px' }}>
+            <Post post_id={item.post_id}
                   title={item.title}
                   content={item.content}
                   user={user.name}

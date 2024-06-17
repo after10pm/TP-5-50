@@ -39,7 +39,7 @@ function AdminAccounts(props) {
     const handleBlockUser = (index) => {
         const user = details[index];
         if (!user.is_blocked) {
-            axios.put(`http://localhost:8000/api/users/change/${user.id}/`, {action: 'block'})
+            axios.put(`http://localhost:8000/users/change/${user.id}/`, {action: 'block'})
                 .then(response => {
                     const updatedDetails = details.map((user, i) => {
                         if (i === index) {
@@ -57,7 +57,7 @@ function AdminAccounts(props) {
 
     const handleUnblockUser = (index) => {
         const user = details[index];
-        axios.put(`http://localhost:8000/api/users/change/${user.id}/`, {action: 'unblock'})
+        axios.put(`http://localhost:8000/users/change/${user.id}/`, {action: 'unblock'})
             .then(response => {
                 const updatedDetails = details.map((item, i) => {
                     if (i === index) {
