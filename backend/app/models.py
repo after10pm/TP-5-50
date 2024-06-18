@@ -49,12 +49,12 @@ class Post(models.Model):
 
 class Like(models.Model):
     like_id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'like'
-        unique_together = ('user', 'post')
+        unique_together = ('user_id', 'post_id')
 
 
 class Category(models.Model):
@@ -66,8 +66,9 @@ class Category(models.Model):
 
 
 class CategoryUser(models.Model):
+    category_user_id = models.BigAutoField(primary_key=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'category_user'
@@ -81,7 +82,7 @@ class Comment(models.Model):
     date_posted = models.DateField(default=current_date, verbose_name="Date Posted")
 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'comment'
@@ -89,9 +90,9 @@ class Comment(models.Model):
 
 class Subscription(models.Model):
     sub_id = models.BigAutoField(primary_key=True)
-    author = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE)
-    subscriber = models.ForeignKey(User, related_name='subscriber', on_delete=models.CASCADE)
+    author_id = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE)
+    subscriber_id = models.ForeignKey(User, related_name='subscriber', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'subscription'
-        unique_together = ('author', 'subscriber')
+        unique_together = ('author_id', 'subscriber_id')

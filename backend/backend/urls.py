@@ -28,26 +28,29 @@ from app.views import RegistrationAPIView, LoginAPIView, PostView, CategoryView
 
 urlpatterns = [
     path('users/', views.UsersView.as_view(), name='user-view'),
-    path('users/change/<int:id>/', views.UsersView.as_view(), name='user-change'),
-    path('users/delete/<int:id>/', views.UsersView.as_view(), name='user-delete'),
-    path('users/<int:id>/', views.UsersView.as_view(), name='user-detail'),
+    path('users/<int:pk>/', views.UsersViewDetail.as_view(), name='user-detail'),
     path('register/', RegistrationAPIView.as_view()),
     path('login/', LoginAPIView.as_view()),
-    path('change/author_status/<int:id>/', views.UserView.as_view()),
     path('user/', views.UserView.as_view()),
+    path('user/<int:pk>/', views.UserView.as_view()),
     path('logout/', views.LogoutView.as_view()),
     path('posts/', views.PostView.as_view()),
     path('posts/<int:pk>/', views.PostViewDetail.as_view()),
 
     path('category/', views.CategoryView.as_view()),
-    path('category/delete/', views.CategoryViewDetail.as_view()),
+    path('category/<int:pk>/', views.CategoryViewDetail.as_view()),
     path('categoryUser/', views.CategoryUserView.as_view()),
+    path('categoryUser/<int:pk>/', views.CategoryUserViewDetail.as_view()),
     path('comment/', views.CommentView.as_view()),
-    path('comment/delete/', views.CommentDetailView.as_view()),
-    path('likes/', views.LikeView.as_view()),
-    path('like/delete/', views.LikeDetailView.as_view()),
+    path('comment/<int:pk>/', views.CommentViewDetail.as_view()),
+    path('commentByPost/<int:pk>/', views.CommentByPostView.as_view()),
+    path('commentByUser/<int:pk>/', views.CommentByPostView.as_view()),
+    path('like/', views.LikeView.as_view()),
+    path('like/<int:pk>/', views.LikeViewDetail.as_view()),
     path('subscriptions/', views.SubscriptionView.as_view(), ),
-    path('subscriptions/delete/', views.SubscriptionDetailView.as_view(),),
+    path('subscriptions/<int:pk>/', views.SubscriptionViewDetail.as_view(),),
+    path('subscriptionsByUser/<int:pk>/', views.SubscriptionsByUserView.as_view(),),
+    path('subscribersByUser/<int:pk>/', views.SubscribersByUserView.as_view(),),
     path('subscriptionsCount/', views.SubscriptionCountView.as_view(),)
 ]
 urlpatterns += staticfiles_urlpatterns()
