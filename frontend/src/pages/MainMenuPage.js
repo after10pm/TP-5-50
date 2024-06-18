@@ -30,7 +30,7 @@ function MainMenuPage(props) {
         history('/category');
     };
     const logout = async () => {
-        await fetch('http://localhost:8000/logout', {
+        await fetch('http://localhost:8000/logout/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',

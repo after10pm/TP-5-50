@@ -8,7 +8,7 @@ import Authorization from "./Authorization";
 import Register from "./Register";
 import Rules from "./RulesPage";
 import PersonalAccount from "./PersonalAccount";
-import PersonalAccountAuthor from "./PersonalAccountAuthor";
+
 import BlogEditing from "./BlogEditing";
 import AuthorPage from "./AuthorPage";
 import Category from "./Category";
@@ -31,7 +31,7 @@ function App() {
     useEffect(() => {
         (
             async () => {
-                const response = await fetch('http://localhost:8000/user', {
+                const response = await fetch('http://localhost:8000/user/', {
                     headers: {'Content-Type': 'application/json'},
                     credentials: 'include',
                 });
@@ -47,7 +47,7 @@ function App() {
 
             }
         )();
-    });
+    }, [user.id]);
 
 
     return (

@@ -4,6 +4,8 @@ import {Navigate, NavLink, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import LoadingAnimation from "../animaiton/LoadingAnimation";
+import Post from "../components/Post";
+import AuthorPost from "../components/AuthorPost";
 
 function AuthorPage(props) {
     const [subscribed, setSubscribed] = useState(false);
@@ -52,9 +54,12 @@ function AuthorPage(props) {
 
     const [isLoading, setIsLoading] = useState(true);
 
+    const [posts, setPosts] = useState([]);
+
     const getUserById = async (userId) => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/users/${userId}/`);
+            const response = await axios.get(`http://localhost:8000/users/${userId}/`);
+            console.log(response.data)
             return response.data;
         } catch (err) {
             console.error(err.toJSON());
@@ -65,7 +70,7 @@ function AuthorPage(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://localhost:8000");
+                const res = await axios.get("http://localhost:8000/users/");
                 setDetails(res.data);
                 const user = await getUserById(userId);
                 setAuthorUser(user);
@@ -84,6 +89,32 @@ function AuthorPage(props) {
 
         return () => clearTimeout(timer);
     }, []);
+
+    useEffect(() => {
+        if (authorUser) {
+            let data;
+            const author_id = authorUser.id
+            const response = axios.get(`http://localhost:8000/posts/${author_id}/`)
+                .then(res => {
+                    data = res.data;
+                    setPosts(data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    }, [user.id, posts, authorUser]);
+
+    const blogPosts = posts.map((item, index) => (
+        <div key={item.index} className='container' style={{position: 'absolute', top: (index*510)+'px', left:'-120px'}}>>
+            <AuthorPost post_id={item.post_id}
+                  title={item.title}
+                  content={item.content}
+                  user={authorUser.name}
+                  date={item.date}
+            />
+        </div>
+    ));
 
     if (user === '') {
         if (isLoading) {
@@ -143,60 +174,17 @@ function AuthorPage(props) {
                         </div>
                         <img src={`https://api.dicebear.com/8.x/initials/svg?seed=${authorUser ? authorUser.name : ''}`} className='account-img' alt="avatar" />
                         <div className='account-text-username'>{authorUser ? authorUser.name : ''}</div>
-                        <div className='acc-block-2' style={{top:'477px', left:'440px', width:'1026px'}}></div>
+                        <div className='acc-block-2' style={{top:'477px', left:'440px', width:'1026px', height: Math.max(640, posts.length * 530) + 'px'}}></div>
 
-                        <div className='container' style={{position: 'absolute', top: '260px', left:'-120px'}}>
-                            <div className='change-block-acc'></div>
-                            <img src={`https://api.dicebear.com/8.x/initials/svg?seed=${authorUser ? authorUser.name : ''}`} className='account-img' style={{left: '790px', top:'265px', width:'32px',height:'32px'}} alt="avatar" />
-
-                            <div className='acc-text-4'>{authorUser ? authorUser.name : ''}</div>
-                            <div className='imgfs-3'></div>
-                            <div className='acc-text-5'>Название поста 1</div>
-                            <div className='text-under-post'>
-                                Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях.
-                                Дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы.
-                            </div>
-                            <div className='date-post'>18:01 21.08.2024</div>
-                            <div className='heart' style={{left:'1210px', top:'282px'}}></div>
-                            <div className='number-likes' style={{top:'282px',left:'1235px'}}>1000</div>
-                            <div className='comments' style={{top:'282px',left:'1335px'}}>93</div>
-                            <i className="bi bi-chat-right-text comments-mark" style={{top:'278px',left:'1305px'}}></i>
-
-
-                            <div className='account-text-read'>Читать далее...</div>
-
-                            <div className='rec' style={{left: '805px', top: '706px', backgroundColor:'#DFDEFF', width:'21px', height:'21px'}}></div>
-                            <div className='account-check-mark'/>
-
+                        <div>
+                            {blogPosts}
                         </div>
-                        <div className='container' style={{position: 'absolute', top: '780px', left:'-120px'}}>
-                            <div className='change-block-acc' style={{height:'528px'}}></div>
-                            <img src={`https://api.dicebear.com/8.x/initials/svg?seed=${authorUser ? authorUser.name : ''}`} className='account-img' style={{left: '790px', top:'265px', width:'32px',height:'32px'}} alt="avatar" />
-                            <div className='acc-text-4'>{authorUser ? authorUser.name : ''}</div>
-                            <div className='imgfs-3'></div>
-                            <div className='acc-text-5'>Мои идейные соображения</div>
-                            <div className='text-under-post'>
-                                Идейные соображения высшего порядка, а также сложившаяся структура организации обеспечивает широкому кругу (специалистов) участие в формировании форм развития.
-                            </div>
-                            <div className='date-post' style={{top:'650px'}}>18:01 21.08.2024</div>
-                            <div className='heart' style={{left:'1210px', top:'282px'}}></div>
-                            <div className='number-likes' style={{top:'282px',left:'1235px'}}>1000</div>
-                            <div className='comments' style={{top:'282px',left:'1335px'}}>93</div>
-                            <i className="bi bi-chat-right-text comments-mark" style={{top:'278px',left:'1305px'}}></i>
+                        {/*<div className='imgfs' style={{left:'710px', top:'1435px'}}></div>*/}
+                        {/*/!*<div className='button' style={{position: 'absolute', left: '1660px', width: '215px'}}>0Nickname0</div>*!/*/}
+                        {/*<div className='account-text-comment'>Хинаточка, продолжай нас радовать своим твореством!!!!</div>*/}
+                        {/*<div className='imgfs' style={{left:'710px', top:'1515px'}}></div>*/}
 
-                            <div className='account-text-read' style={{top:'650px', left:"875px"}}>0Nickname0</div>
-
-                            {/*<div className='rec' style={{left: '805px', top: '706px', backgroundColor:'#DFDEFF', width:'21px', height:'21px'}}></div>*/}
-                            {/*<div className='account-check-mark'/>*/}
-
-
-                        </div>
-                        <div className='imgfs' style={{left:'710px', top:'1435px'}}></div>
-                        {/*<div className='button' style={{position: 'absolute', left: '1660px', width: '215px'}}>0Nickname0</div>*/}
-                        <div className='account-text-comment'>Хинаточка, продолжай нас радовать своим твореством!!!!</div>
-                        <div className='imgfs' style={{left:'710px', top:'1515px'}}></div>
-
-                        <input type="text" id="comment" name="comment" placeholder="Оставить комментарий" className='account-text-write'/>
+                        {/*<input type="text" id="comment" name="comment" placeholder="Оставить комментарий" className='account-text-write'/>*/}
 
 
                     </div>

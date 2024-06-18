@@ -24,39 +24,39 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
 
-        fields = ['post_id', 'title', 'content', 'image', 'publish_date', 'user', 'like_count']
+        fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
 
-        fields = ['category_id', 'name']
+        fields = '__all__'
 
 
 class CategoryUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryUser
 
-        fields = ['category', 'user']
+        fields = '__all__'
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
 
-        fields = ['comment_id', 'date_posted', 'user', 'post']
+        fields = '__all__'
 
 
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
 
-        fields = ['like_id', 'post', 'user']
+        fields = '__all__'
 
 
 class SubSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
 
-        fields = ['sub_id', 'author', 'subscriber']
+        fields = '__all__'

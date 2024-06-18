@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'app',
     'rest_framework',
     'corsheaders',
+    'drf_yasg',
 
 ]
 
@@ -62,7 +63,9 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 
 ]
-
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False
+}
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
@@ -122,7 +125,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'HOST': 'my_post',
         'PORT': 5432,
     }
 }

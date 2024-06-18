@@ -20,39 +20,41 @@ function Authorization ()  {
 
     const handleEmailChange = (event) => {
         const emailValue = event.target.value;
-        const isValidEmail = EMAIL_REGEXP.test(emailValue);
-        setEmail(emailValue);
+        const isValidEmail = !/\s|,|:|;|"|'/g.test(emailValue);
+        setEmail(isValidEmail ? emailValue : email);
         setIsEmailValid(isValidEmail);
     };
 
     const handlePasswordChange = (event) => {
         const passwordValue = event.target.value;
-        const isValidPassword = passwordValue.length >= 6;
-        setPassword(passwordValue);
+        const isValidPassword = !/\s|,|:|;|"|'/g.test(passwordValue);
+        setPassword(isValidPassword ? passwordValue : password);
         setIsPasswordValid(isValidPassword);
     };
 
     const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        const response = await fetch('http://localhost:8000/login', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            credentials: 'include',
-            body: JSON.stringify({
-                email,
-                password
-            })
-        });
+        const isValidEmail = EMAIL_REGEXP.test(email) && !/\s|,|:|;|"|'/g.test(email);
+        const isValidPassword = password.length >= 6 && !/\s|,|:|;|"|'/g.test(password);
 
-        if (response.ok) {
-            setRedirect(true);
+        if (isValidEmail && isValidPassword) {
+            const response = await fetch('http://localhost:8000/login/', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            });
 
-            window.location.reload()
-
-
-        } else {
-            window.alert('Неправильный email или пароль');
+            if (response.ok) {
+                setRedirect(true);
+                window.location.reload();
+            } else {
+                window.alert('Неправильный email или пароль');
+            }
         }
     }
     if (redirectTo) {
