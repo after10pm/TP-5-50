@@ -28,18 +28,18 @@ class UsersViewDetail(APIView):
     Получение, изменение, удаление пользователя по id.
     """
 
-    def get(self, request, id):
+    def get(self, request, pk):
         """
         Получение пользователя по id.
         """
         try:
-            user = User.objects.get(id=id)
+            user = User.objects.get(id=pk)
             serializer = UserSerializer(user)  # Используйте свой сериализатор для пользователя
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({'error': 'Пользователь не найден'}, status=status.HTTP_404_NOT_FOUND)
 
-    def put(self, request, id):
+    def put(self, request, pk):
         """
         Изменение пользователя по id.
         """
@@ -54,12 +54,12 @@ class UsersViewDetail(APIView):
         user.save()
         return Response({'message': 'Пользователь успешно обновлен'})
 
-    def delete(self, request, id):
+    def delete(self, request, pk):
         """
         Удаление пользователя по id.
         """
         try:
-            user = User.objects.get(id=id)
+            user = User.objects.get(id=pk)
             user.delete()
             return Response({'message': 'Пользователь успешно удален'}, status=status.HTTP_204_NO_CONTENT)
         except User.DoesNotExist:

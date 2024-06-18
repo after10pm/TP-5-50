@@ -24,7 +24,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from .yasg import urlpatterns as doc_urls
 from django.views.generic import TemplateView
 
-from app.views import RegistrationAPIView, LoginAPIView, PostView, CategoryView
+from app.views import *
 
 urlpatterns = [
     path('users/', views.UsersView.as_view(), name='user-view'),
@@ -32,7 +32,7 @@ urlpatterns = [
     path('register/', RegistrationAPIView.as_view()),
     path('login/', LoginAPIView.as_view()),
     path('user/', views.UserView.as_view()),
-    path('user/<int:pk>/', views.UserView.as_view()),
+    path('user/<int:pk>/', views.UserViewDetail.as_view()),
     path('logout/', views.LogoutView.as_view()),
     path('posts/', views.PostView.as_view()),
     path('posts/<int:pk>/', views.PostViewDetail.as_view()),
