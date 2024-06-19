@@ -12,11 +12,33 @@ function AuthorPage(props) {
     const user = props.user;
     const history = useNavigate();
     const [isVisible, setIsVisible] = useState(false);
+    const [details, setDetails] = useState([]);
+    let { userId } = useParams();
+    const [authorUser, setAuthorUser] = useState(null);
+    const [imageURL, setImageURL] = useState('');
+
+    const [isLoading, setIsLoading] = useState(true);
+
+    const [posts, setPosts] = useState([]);
     const markClick = () => {
         setIsVisible(!isVisible);
     }
     const checkMarkRef = useRef();
     const menuRef = useRef();
+    useEffect(() =>{
+        const checkUserExistence = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8000/users/${userId}/`);
+                setAuthorUser(response.data);
+            } catch (error) {
+                console.error('User not found:', error);
+
+                history('/');
+            }
+        };
+
+        checkUserExistence();
+    }, [userId, history]);
     useEffect(() =>{
         function clickOutsideMenu(event) {
             if (menuRef.current && !checkMarkRef.current.contains(event.target) && !menuRef.current.contains(event.target)){
@@ -28,6 +50,36 @@ function AuthorPage(props) {
             document.removeEventListener('click', clickOutsideMenu);
         };
     }, []);
+    useEffect(() => {
+        const checkSubscription = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8000/subscriptions/${authorUser.id}/${user.id}/`);
+                const isSubscribed = response.data.isSubscribed;
+                setSubscribed(isSubscribed);
+                console.log(isSubscribed)
+            } catch (error) {
+                console.error('Error checking subscription:', error);
+            }
+        };
+
+        if (authorUser) {
+            checkSubscription();
+        }
+    }, [authorUser, user.id]);
+    useEffect(() => {
+        if (authorUser) {
+            let data;
+            const author_id = authorUser.id
+            const response = axios.get(`http://localhost:8000/posts/${author_id}/`)
+                .then(res => {
+                    data = res.data;
+                    setPosts(data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    }, [user.id, posts, authorUser]);
     const redirectToMyAccount = () => {
         history('/my_profile');
     };
@@ -44,17 +96,24 @@ function AuthorPage(props) {
 
     }
 
-    const toggleSubscribed = () => {
-        setSubscribed(prevSubscribed => !prevSubscribed);
+    const toggleSubscribed = async () => {
+        try {
+            if (subscribed) {
+
+                await axios.delete(`http://localhost:8000/subscriptions/${authorUser.id}/${user.id}/`); // Используем authorUser.id и user.id в URL
+                setSubscribed(false);
+            } else {
+                console.log(authorUser.id, user.id)
+                const response = await axios.post('http://localhost:8000/subscriptions/', {
+                    author: authorUser.id,
+                    subscriber: user.id,
+                });
+                setSubscribed(true);
+            }
+        } catch (error) {
+            console.error('Error subscribing/unsubscribing:', error);
+        }
     };
-    const [details, setDetails] = useState([]);
-    let { userId } = useParams();
-    const [authorUser, setAuthorUser] = useState(null);
-    const [imageURL, setImageURL] = useState('');
-
-    const [isLoading, setIsLoading] = useState(true);
-
-    const [posts, setPosts] = useState([]);
 
     const getUserById = async (userId) => {
         try {
@@ -90,20 +149,6 @@ function AuthorPage(props) {
         return () => clearTimeout(timer);
     }, []);
 
-    useEffect(() => {
-        if (authorUser) {
-            let data;
-            const author_id = authorUser.id
-            const response = axios.get(`http://localhost:8000/posts/${author_id}/`)
-                .then(res => {
-                    data = res.data;
-                    setPosts(data);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        }
-    }, [user.id, posts, authorUser]);
 
     const blogPosts = posts.map((item, index) => (
         <div key={item.index} className='container' style={{position: 'absolute', top: (index*510)+'px', left:'-120px'}}>>
@@ -167,10 +212,12 @@ function AuthorPage(props) {
 
                         <div className='account-block'></div>
                         <div className='account-header'></div>
-                        <div className={`account-button ${subscribed ? 'subscribed' : ''}`} onClick={toggleSubscribed}>
-                            {subscribed ? 'Подписаться' : 'Отписаться'}
-                        </div><div className='account-button' style={{backgroundColor:'#FF6F6F'}}>
-                            Отписаться
+                        <div
+                            className={`account-button ${subscribed ? 'subscribed' : ''}`}
+                            onClick={toggleSubscribed}
+                            style={{ backgroundColor: subscribed ? '#FF6F6F' : '#807EFF' }} // Меняем цвет фона в зависимости от состояния
+                        >
+                            {subscribed ? 'Отписаться' : 'Подписаться'}
                         </div>
                         <img src={`https://api.dicebear.com/8.x/initials/svg?seed=${authorUser ? authorUser.name : ''}`} className='account-img' alt="avatar" />
                         <div className='account-text-username'>{authorUser ? authorUser.name : ''}</div>
