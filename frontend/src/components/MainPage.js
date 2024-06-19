@@ -18,7 +18,6 @@ function MainPage () {
         <div className='header'>
 
             <NavLink exact to="/" className="brand">SocialSphere</NavLink>
-            <NavLink exact to="/" className="button" style={{left:"1000px"}} onClick={logout}>Logout</NavLink>
             <NavLink exact to="/authorization" className='button'>Вход</NavLink>
             <NavLink exact to="/register" className='button-reg'>Регистрация</NavLink>
         </div>

@@ -6,9 +6,9 @@ import MainMenuPage from "./MainMenuPage";
 import MainPage from "../components/MainPage";
 import Authorization from "./Authorization";
 import Register from "./Register";
-import Rules from "./Rules";
+import Rules from "./RulesPage";
 import PersonalAccount from "./PersonalAccount";
-import PersonalAccountAuthor from "./PersonalAccountAuthor";
+
 import BlogEditing from "./BlogEditing";
 import AuthorPage from "./AuthorPage";
 import Category from "./Category";
@@ -16,6 +16,7 @@ import AdminAccounts from "./AdminAccounts";
 import BlockCategory from "../components/blockCategory";
 import CategoryAdmins from "./categoryAdmins";
 import ServicePanel from "./ServicePanel";
+import RulesPage from "./RulesPage";
 import {withRedirectIfBlank} from '../components/withRedirectIfBlank'
 
 import axios from "axios";
@@ -30,7 +31,7 @@ function App() {
     useEffect(() => {
         (
             async () => {
-                const response = await fetch('http://localhost:8000/user', {
+                const response = await fetch('http://localhost:8000/user/', {
                     headers: {'Content-Type': 'application/json'},
                     credentials: 'include',
                 });
@@ -46,7 +47,7 @@ function App() {
 
             }
         )();
-    });
+    }, [user.id]);
 
 
     return (
@@ -55,11 +56,8 @@ function App() {
                 <Route exact path="/" element={<MainMenuPage user={user}/>}/>
                 <Route path="/authorization" element={<Authorization/>}/>
                 <Route path="/register" element={<Register/>}/>
-                <Route path="/rules" element={<Rules/>}/>
-
+                <Route path="/rules" element={<RulesPage user={user}/>}/>
                 <Route path="/my_profile" element={<PersonalAccount user={user}/>}/>
-
-
                 <Route path="/blogEditing" element={<BlogEditing user={user}/>}/>
                 <Route path="/profile/:userId" element={<AuthorPage user={user}/>}/>
                 <Route path="/category" element={<Category user={user}/>}/>
