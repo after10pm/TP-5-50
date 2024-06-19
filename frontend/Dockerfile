@@ -1,13 +1,14 @@
 FROM node:14.17.3
 
-WORKDIR /frontend2/frontend
+WORKDIR /frontend
 
-COPY package.json /frontend2/frontend/package.json
-COPY package-lock.json /frontend2/frontend/package-lock.json
+COPY package.json /frontend/package.json
+COPY package-lock.json /frontend/package-lock.json
 
-COPY . .
 
 RUN npm install
+
+COPY . /frontend
 
 EXPOSE 3000
 
