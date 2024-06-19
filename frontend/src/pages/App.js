@@ -17,10 +17,10 @@ import BlockCategory from "../components/blockCategory";
 import CategoryAdmins from "./categoryAdmins";
 import ServicePanel from "./ServicePanel";
 import RulesPage from "./RulesPage";
-import {withRedirectIfBlank} from '../components/withRedirectIfBlank'
-
+import { getAccessTokenFromCookies } from "../components/CookiesUtils";
 import axios from "axios";
-import ProtectedRoutes from "../components/ProtectedRoutes";
+
+
 
 function App() {
     const [user, setUser] = useState('');
@@ -30,9 +30,14 @@ function App() {
 
     useEffect(() => {
         (
+
             async () => {
+                const accessToken = getAccessTokenFromCookies();
                 const response = await fetch('http://localhost:8000/user/', {
-                    headers: {'Content-Type': 'application/json'},
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`, // Включение токена доступа в заголовке
+                    },
                     credentials: 'include',
                 });
 
@@ -40,11 +45,9 @@ function App() {
                 if (response.ok) {
                     setUser(content);
                     setRedirect(true);
-
                 } else {
                     setRedirect(false);
                 }
-
             }
         )();
     }, [user.id]);

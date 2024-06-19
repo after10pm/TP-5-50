@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import '../components/Register.css';
 import {NavLink} from "react-router-dom";
-import DatePicker from 'react-datepicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from "axios";
 import alert from "bootstrap/js/src/alert";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import {useNavigate} from 'react-router-dom';
 import {SyntheticEvent} from "react";
+import {DemoContainer} from "@mui/x-date-pickers/internals/demo";
 
 
 function Register() {
@@ -97,14 +100,14 @@ function Register() {
             <div className='check-mark' onClick={toggleDatePicker} style={{left: '1116.5px'}}/>
             {isDatePickerShown && (
                 <div className='date-picker-container'>
-                    <DatePicker
-                        selected={selectedDate}
-                        onChange={handleDateChange}
-                        inline
-                        dateFormat="dd/MM/yyyy"
-                        showYearDropdown
-                        scrollableYearDropdown
-                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            selected={selectedDate}
+                            onChange={handleDateChange}
+                            inline
+                            dateFormat="dd/MM/yyyy"
+                        />
+                    </LocalizationProvider>
                 </div>
             )}
 

@@ -2,6 +2,7 @@ import React, {Component, useEffect, useState} from 'react';
 import BlockCategory from "../components/blockCategory";
 import {Navigate, NavLink} from "react-router-dom";
 import LoadingAnimation from "../animaiton/LoadingAnimation";
+import {getAccessTokenFromCookies} from "../components/CookiesUtils";
 
 const CategoryAdmins = (props) => {
 
@@ -85,6 +86,18 @@ const CategoryAdmins = (props) => {
 
         return () => clearTimeout(timer);
     }, []);
+    const logout = async () => {
+        const accessToken = getAccessTokenFromCookies();
+        await fetch('http://localhost:8000/logout/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`, // Включение токена доступа в заголовке
+            },
+            credentials: 'include',
+        });
+        window.location.reload()
+    }
 
     const {searchResults, newCategory} = this.state;
 

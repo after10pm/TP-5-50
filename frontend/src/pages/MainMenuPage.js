@@ -3,6 +3,7 @@ import MainPage from "../components/MainPage";
 import MainMenu from "../components/MainMenu";
 import Fotter from "../components/Fotter";
 import {BrowserRouter, NavLink, useLocation, useNavigate} from "react-router-dom";
+import {getAccessTokenFromCookies} from "../components/CookiesUtils";
 
 function MainMenuPage(props) {
     const history = useNavigate();
@@ -30,9 +31,13 @@ function MainMenuPage(props) {
         history('/category');
     };
     const logout = async () => {
+        const accessToken = getAccessTokenFromCookies();
         await fetch('http://localhost:8000/logout/', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`, // Включение токена доступа в заголовке
+            },
             credentials: 'include',
         });
         window.location.reload()

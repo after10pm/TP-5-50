@@ -7,6 +7,7 @@ import Post from "../components/Post";
 import LoadingAnimation from "../animaiton/LoadingAnimation";
 import axios from "axios";
 import AuthorPage from "./AuthorPage";
+import { getAccessTokenFromCookies } from "../components/CookiesUtils";
 
 
 function PersonalAccount(props) {
@@ -24,6 +25,8 @@ function PersonalAccount(props) {
     const checkMarkRef = useRef();
     const menuRef = useRef();
 
+
+
     useEffect(() => {
         function clickOutsideMenu(event) {
             if (menuRef.current && !checkMarkRef.current.contains(event.target) && !menuRef.current.contains(event.target)) {
@@ -35,15 +38,21 @@ function PersonalAccount(props) {
             document.removeEventListener('click', clickOutsideMenu);
         };
     }, []);
-    const handleUnsubscribe = (userId) => {
-        axios.delete(`http://localhost:8000/subscriptions/${userId}/`)
-            .then(() => {
-                setUnsubscribedUsers([...unsubscribedUsers, userId]);
-            })
-            .catch(error => {
-                console.error('Error unsubscribing:', error);
+
+    const handleUnsubscribe = async (userId) => {
+        const accessToken = getAccessTokenFromCookies();
+        try {
+            await axios.delete(`http://localhost:8000/subscriptions/${userId}/`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
             });
+            setUnsubscribedUsers([...unsubscribedUsers, userId]);
+        } catch (error) {
+            console.error('Error unsubscribing:', error);
+        }
     };
+
 
     const redirectToMyAccount = () => {
         history('/my_profile');
@@ -54,13 +63,22 @@ function PersonalAccount(props) {
     };
 
     const logout = async () => {
-        await fetch('http://localhost:8000/logout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-        });
-        window.location.reload();
+        const accessToken = getAccessTokenFromCookies();
+        try {
+            await fetch('http://localhost:8000/logout/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                credentials: 'include',
+            });
+            window.location.reload();
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
     };
+
 
     const handleMouseEnter = (index) => {
         setHoveredIndices([...hoveredIndices, index]);
@@ -98,18 +116,22 @@ function PersonalAccount(props) {
 
     useEffect(() => {
         const fetchSubscriptions = async () => {
+            const accessToken = getAccessTokenFromCookies();
             try {
                 if (!user || !user.id) {
                     return;
                 }
                 const subscriber_id = user.id;
-                const response = await axios.get(`http://localhost:8000/subscriptionsByUser/${subscriber_id}/`);
+                const response = await axios.get(`http://localhost:8000/subscriptionsByUser/${subscriber_id}/`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
                 if (response.status !== 200) {
                     console.error('Error fetching subscriptions data');
                 }
                 const data = response.data;
-                setDetails(data); // Assuming details should be set here, adjust as per your API response structure
-                console.log(details)
+                setDetails(data);
             } catch (error) {
                 console.error('Error fetching subscriptions:', error);
             }
@@ -117,6 +139,7 @@ function PersonalAccount(props) {
 
         fetchSubscriptions();
     }, [user]);
+
 
     // Функция для проверки, подписан ли пользователь
     const isSubscribed = (subscriberId) => {

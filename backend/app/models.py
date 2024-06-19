@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 
 class User(AbstractUser):
     id = models.BigAutoField(primary_key=True)
-    name = models.CharField('name', max_length=40, unique=True)
+    name = models.CharField('name', max_length=15, unique=True)
     email = models.CharField(max_length=100, unique=True)
     password = models.CharField('password', max_length=255)
     date_of_birth = models.DateField('date_of_birth')
@@ -39,7 +39,7 @@ class Post(models.Model):
     current_date = datetime.now().strftime('%Y-%m-%d')
     publish_date = models.DateField(default=current_date, verbose_name="registration_date")
 
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     like_count = models.IntegerField('like_count', default=0)
 
@@ -49,12 +49,12 @@ class Post(models.Model):
 
 class Like(models.Model):
     like_id = models.BigAutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'like'
-        unique_together = ('user_id', 'post_id')
+        unique_together = ('user', 'post')
 
 
 class Category(models.Model):
@@ -68,7 +68,7 @@ class Category(models.Model):
 class CategoryUser(models.Model):
     category_user_id = models.BigAutoField(primary_key=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'category_user'
@@ -81,8 +81,8 @@ class Comment(models.Model):
     current_date = datetime.now().strftime('%Y-%m-%d')
     date_posted = models.DateField(default=current_date, verbose_name="Date Posted")
 
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'comment'

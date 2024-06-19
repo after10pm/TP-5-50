@@ -3,6 +3,7 @@ import axios from "axios";
 import LoadingAnimation from "../animaiton/LoadingAnimation";
 import {Navigate, NavLink} from "react-router-dom";
 import '../components/Admins.css'
+import {getAccessTokenFromCookies} from "../components/CookiesUtils";
 
 function AdminAccounts(props) {
     const [details, setDetails] = useState([]);
@@ -13,7 +14,7 @@ function AdminAccounts(props) {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/users/');
+            const response = await fetch('http://localhost:8000/users/');
             if (!response.ok) {
                 throw new Error('Ошибка при получении данных');
             }
@@ -25,6 +26,18 @@ function AdminAccounts(props) {
             console.error('Ошибка при получении пользователей:', error);
         }
     };
+    const logout = async () => {
+        const accessToken = getAccessTokenFromCookies();
+        await fetch('http://localhost:8000/logout/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`, // Включение токена доступа в заголовке
+            },
+            credentials: 'include',
+        });
+        window.location.reload()
+    }
     useEffect(() => {
         fetchUsers();
     }, []);

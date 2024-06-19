@@ -1,6 +1,7 @@
 import React, {Component, useState} from 'react';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
+import {getAccessTokenFromCookies} from "./CookiesUtils";
 
 function Post(props) {
     const [isPostDeleted, setIsPostDeleted] = useState(false);
@@ -8,12 +9,25 @@ function Post(props) {
     const [editedText, setEditedText] = useState(props.content);
 
     const handleDeletePost = async () => {
-        const postId = props.post_id
-        console.log(postId)
+        const postId = props.post_id;
+        console.log(postId);
         const confirmDelete = window.confirm("Вы действительно хотите удалить пост?");
+
         if (confirmDelete) {
+            const accessToken = getAccessTokenFromCookies();
+
+            if (!accessToken) {
+                console.error('Access token not found');
+                return;
+            }
+
             try {
-                await axios.delete(`http://localhost:8000/posts/${postId}/`); // Удаляем пост на сервере
+                await axios.delete(`http://localhost:8000/posts/${postId}/`, { // Удаляем пост на сервере
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`, // Добавьте Authorization header
+                    }
+                });
+                window.location.reload();
             } catch (error) {
                 console.error('Error deleting post:', error);
             }
@@ -21,11 +35,21 @@ function Post(props) {
     };
     const handleEditPost = async () => {
         const postId = props.post_id;
+        const accessToken = getAccessTokenFromCookies();
+
+        if (!accessToken) {
+            console.error('Access token not found');
+            return;
+        }
+
         try {
-            const response = await axios.put(
-                `http://localhost:8000/posts/${postId}/`,
-                { content: editedText }
-            );
+            const response = await axios.put(`http://localhost:8000/posts/${postId}/`, {
+                content: editedText,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`, // Добавляем Authorization header
+                }
+            });
             setIsEditing(false);
         } catch (error) {
             console.error('Error updating post:', error);

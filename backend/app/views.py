@@ -17,6 +17,8 @@ from django.db.models.signals import post_save, post_delete
 
 
 class UsersView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
@@ -27,6 +29,7 @@ class UsersViewDetail(APIView):
     """
     Получение, изменение, удаление пользователя по id.
     """
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         """
@@ -102,47 +105,42 @@ class LoginAPIView(APIView):
         user = User.objects.filter(email=email).first()
 
         if user is None:
-            raise AuthenticationFailed('Неправильный email или пароль')
+            return Response({'error': 'Неправильный email или пароль'}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not user.check_password(password):
-            raise AuthenticationFailed('Неправильный email или пароль')
+            return Response({'error': 'Неправильный email или пароль'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        payload = {
-            'id': user.id,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-            'iat': datetime.datetime.utcnow()
-        }
+        try:
+            refresh = RefreshToken.for_user(user)
+            refresh.payload.update({
+                'user_id': user.id,
+                'name': user.name
+            })
+            token = {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }
+            response = Response(token, status=status.HTTP_200_OK)
+            response.set_cookie(key='jwt', value=str(token['access']), httponly=False)
+            return response
 
-        token = jwt.encode(payload, 'secret', algorithm='HS256')
-
-        response = Response()
-
-        response.set_cookie(key='jwt', value=token, httponly=True)
-        response.data = {
-            'jwt': token
-        }
-
-        return response
+        except TokenError as e:
+            return Response({'error': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class UserView(APIView):
     """
     Получение авторизованного пользователя.
     """
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         """
         Получение авторизованного пользователя по токену.
         """
-        token = request.COOKIES.get('jwt')
-        if not token:
-            raise AuthenticationFailed('Unauthenticated')
-        try:
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
+        user_id = request.user.id
 
-        except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Unauthenticated')
-
-        user = User.objects.filter(id=payload['id']).first()
+        user = User.objects.filter(id=user_id).first()
         serializer = UserSerializer(user)
 
         return Response(serializer.data)
@@ -165,9 +163,8 @@ class UserViewDetail(APIView):
 
 
 class LogoutView(APIView):
-    """
-    Выход из аккаунта
-    """
+    """Выход из аккаунта"""
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         response = Response()
@@ -183,6 +180,7 @@ class PostView(APIView):
     """
     Получение, создание постов.
     """
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         """
@@ -207,13 +205,14 @@ class PostViewDetail(APIView):
     """
     Получение, изменение, удаление постов по id.
     """
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         """
         Получение постов пользователя по его ID.
         """
         try:
-            posts = Post.objects.filter(user_id=pk)
+            posts = Post.objects.filter(user=pk)
             serializer = PostSerializer(posts, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Post.DoesNotExist:
@@ -250,6 +249,7 @@ class CategoryView(APIView):
     """
     Получение, создание категорий.
     """
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         """
@@ -272,6 +272,7 @@ class CategoryView(APIView):
 
 class CategoryViewDetail(APIView):
     """Получение, изменение, удаление категории по ID."""
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         """Получение категории по ID"""
@@ -284,7 +285,7 @@ class CategoryViewDetail(APIView):
 
     def put(self, request, pk):
         """Изменение категории по id"""
-        category = Category.objects.get(pk=category_id)
+        category = Category.objects.get(pk=pk)
         serializer = CategorySerializer(category, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -299,6 +300,7 @@ class CategoryViewDetail(APIView):
 
 class CategoryUserView(APIView):
     """Получение списка id всех категорий и id всех пользователей относящихся к этой категории. """
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         """Получение списка id всех категорий и id всех пользователей относящихся к этой категории. """
@@ -321,7 +323,7 @@ class CategoryUserViewDetail(APIView):
         """Получение списка пользователей для заданной категории."""
         try:
             category_users = CategoryUser.objects.filter(
-                category__id=pk)
+                category=pk)
             serializer = CategoryUserSerializer(category_users, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except CategoryUser.DoesNotExist:
@@ -330,7 +332,7 @@ class CategoryUserViewDetail(APIView):
     def delete(self, request, pk):
         """Удаление пользователей из заданной категории."""
         try:
-            category_users = CategoryUser.objects.filter(category__id=pk)
+            category_users = CategoryUser.objects.filter(category=pk)
             category_users.delete()
             return Response({'message': 'Пользователи успешно удалены из категории'}, status=status.HTTP_204_NO_CONTENT)
         except CategoryUser.DoesNotExist:
@@ -339,6 +341,7 @@ class CategoryUserViewDetail(APIView):
 
 class CommentView(APIView):
     """Получение списка всех комментариев и создание нового комментария."""
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         """Получение списка всех комментариев."""
@@ -356,6 +359,7 @@ class CommentView(APIView):
 
 class CommentViewDetail(APIView):
     """Получение, удаление комментария по его ID."""
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         """Получение комментария по его ID."""
@@ -390,6 +394,7 @@ class CommentViewDetail(APIView):
 
 class CommentByPostView(APIView):
     """Получение всех комментариев, относящихся к определенному посту."""
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         """Получение всех комментариев, относящихся к определенному посту."""
@@ -403,6 +408,7 @@ class CommentByPostView(APIView):
 
 class CommentByUserView(APIView):
     """Получение всех комментариев этого пользователя."""
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         """Получение всех комментариев данного пользователя по его id."""
@@ -416,6 +422,7 @@ class CommentByUserView(APIView):
 
 class LikeView(APIView):
     """Получение всех лайков и создание лайка."""
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         """Получение всех лайков."""
@@ -433,6 +440,7 @@ class LikeView(APIView):
 
 class LikeViewDetail(APIView):
     """Удаление лайка."""
+    permission_classes = [IsAuthenticated]
 
     def delete(self, request):
         like_id = request.data.get('like_id')
@@ -444,13 +452,14 @@ class LikeViewDetail(APIView):
 @receiver(post_save, sender=Like)
 @receiver(post_delete, sender=Like)
 def update_like_count(sender, instance, **kwargs):
-    post_id = instance.post_id
-    like_count = Like.objects.filter(post_id=post_id).count()
+    post_id = instance.post
+    like_count = Like.objects.filter(post=post_id).count()
     Post.objects.filter(post_id=post_id).update(like_count=like_count)
 
 
 class SubscriptionView(APIView):
     """Получение всех подписок и создание подписки."""
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         """Получение всех подписок."""
@@ -475,6 +484,7 @@ class SubscriptionView(APIView):
 
 class SubscriptionViewDetail(APIView):
     """Удаление подписки по author_id и user_id."""
+    permission_classes = [IsAuthenticated]
 
     def delete(self, request, pk_a, pk_u):
         """Удаление подписки по author_id и user_id."""
@@ -500,6 +510,7 @@ class SubscriptionViewDetail(APIView):
 
 class SubscriptionsByUserView(APIView):
     """Получение всех подписок определенного пользователя."""
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         """Получение всех подписок определенного пользователя."""
@@ -514,6 +525,7 @@ class SubscriptionsByUserView(APIView):
 
 class SubscribersByUserView(APIView):
     """Получение всех подписчиков определенного пользователя."""
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         """Получение всех подписчиков определенного пользователя."""
@@ -526,6 +538,8 @@ class SubscribersByUserView(APIView):
 
 
 class SubscriptionCountView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         author_id = request.data.get('author')
         subscriber_count = Subscription.objects.filter(author=author_id).count()

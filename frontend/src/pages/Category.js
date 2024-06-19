@@ -3,6 +3,7 @@ import "../components/Category.css";
 import BlockCategory from "../components/blockCategory";
 import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import LoadingAnimation from "../animaiton/LoadingAnimation";
+import {getAccessTokenFromCookies} from "../components/CookiesUtils";
 
 function Category(props) {
     const user = props.user;
@@ -32,9 +33,13 @@ function Category(props) {
         history('/category');
     };
     const logout = async () => {
-        await fetch('http://localhost:8000/logout', {
+        const accessToken = getAccessTokenFromCookies();
+        await fetch('http://localhost:8000/logout/', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`, // Включение токена доступа в заголовке
+            },
             credentials: 'include',
         });
         window.location.reload()

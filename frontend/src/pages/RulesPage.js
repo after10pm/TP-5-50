@@ -3,6 +3,7 @@ import MainPage from "../components/MainPage";
 import '../components/Rules.css';
 import {NavLink, useNavigate} from "react-router-dom";
 import Rules from "../components/Rules";
+import {getAccessTokenFromCookies} from "../components/CookiesUtils";
 
 
 function RulesPage(props) {
@@ -32,13 +33,16 @@ function RulesPage(props) {
         history('/category');
     };
     const logout = async () => {
-        await fetch('http://localhost:8000/logout', {
+        const accessToken = getAccessTokenFromCookies();
+        await fetch('http://localhost:8000/logout/', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`, // Включение токена доступа в заголовке
+            },
             credentials: 'include',
         });
         window.location.reload()
-
     }
     if (props.user !== '') {
         return (
@@ -89,4 +93,5 @@ function RulesPage(props) {
 
     }
 }
-    export default RulesPage;
+
+export default RulesPage;

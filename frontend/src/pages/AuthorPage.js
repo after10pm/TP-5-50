@@ -6,6 +6,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import LoadingAnimation from "../animaiton/LoadingAnimation";
 import Post from "../components/Post";
 import AuthorPost from "../components/AuthorPost";
+import { getAccessTokenFromCookies } from "../components/CookiesUtils";
 
 function AuthorPage(props) {
     const [subscribed, setSubscribed] = useState(false);
@@ -87,27 +88,50 @@ function AuthorPage(props) {
         history('/category');
     };
     const logout = async () => {
-        await fetch('http://localhost:8000/logout', {
+        const accessToken = getAccessTokenFromCookies(); // Access token теперь доступен в функции logout
+
+        await fetch('http://localhost:8000/logout/', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`, // Включение токена доступа в заголовке
+            },
             credentials: 'include',
         });
-        window.location.reload()
-
+        window.location.reload();
     }
 
     const toggleSubscribed = async () => {
         try {
-            if (subscribed) {
+            const accessToken = getAccessTokenFromCookies();
 
-                await axios.delete(`http://localhost:8000/subscriptions/${authorUser.id}/${user.id}/`); // Используем authorUser.id и user.id в URL
+            if (!accessToken) {
+
+                console.error('Access token not found');
+                return;
+            }
+
+            if (subscribed) {
+                await axios.delete(`http://localhost:8000/subscriptions/${authorUser.id}/${user.id}/`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
                 setSubscribed(false);
             } else {
-                console.log(authorUser.id, user.id)
-                const response = await axios.post('http://localhost:8000/subscriptions/', {
-                    author: authorUser.id,
-                    subscriber: user.id,
-                });
+                console.log(authorUser.id, user.id);
+                const response = await axios.post(
+                    'http://localhost:8000/subscriptions/',
+                    {
+                        author: authorUser.id,
+                        subscriber: user.id,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`, // Добавляем Authorization header
+                        },
+                    }
+                );
                 setSubscribed(true);
             }
         } catch (error) {
@@ -117,24 +141,49 @@ function AuthorPage(props) {
 
     const getUserById = async (userId) => {
         try {
-            const response = await axios.get(`http://localhost:8000/users/${userId}/`);
-            console.log(response.data)
+            const accessToken = getAccessTokenFromCookies();
+
+            if (!accessToken) {
+                console.error('Access token not found');
+                return null;
+            }
+
+            const response = await axios.get(`http://localhost:8000/users/${userId}/`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+
             return response.data;
-        } catch (err) {
-            console.error(err.toJSON());
+        } catch (error) {
+            console.error('Request error:', error);
             return null;
         }
-    }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://localhost:8000/users/");
-                setDetails(res.data);
-                const user = await getUserById(userId);
-                setAuthorUser(user);
-            } catch (err) {
-                console.log(err);
+                const accessToken = getAccessTokenFromCookies();
+
+                if (!accessToken) {
+                    console.error('Access token not found');
+                    return;
+                }
+
+                const [detailsResponse, authorResponse] = await Promise.all([
+                    axios.get('http://localhost:8000/users/', {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    }),
+                    getUserById(userId),
+                ]);
+
+                setDetails(detailsResponse.data);
+                setAuthorUser(authorResponse);
+            } catch (error) {
+                console.error('Request error:', error);
             }
         };
 
