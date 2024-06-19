@@ -34,7 +34,7 @@ class UsersViewDetail(APIView):
         """
         try:
             user = User.objects.get(id=pk)
-            serializer = UserSerializer(user)  # Используйте свой сериализатор для пользователя
+            serializer = UserSerializer(user)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({'error': 'Пользователь не найден'}, status=status.HTTP_404_NOT_FOUND)
@@ -474,12 +474,28 @@ class SubscriptionView(APIView):
 
 
 class SubscriptionViewDetail(APIView):
-    """Удаление подписки по id."""
+    """Удаление подписки по author_id и user_id."""
 
-    def delete(self, request, pk):
-        subscription = Subscription.objects.get(pk=pk)
-        subscription.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, pk_a, pk_u):
+        """Удаление подписки по author_id и user_id."""
+        try:
+            subscription = Subscription.objects.get(
+                author=pk_a, subscriber=pk_u
+            )
+            subscription.delete()
+            return Response('succses', status=status.HTTP_204_NO_CONTENT)
+        except Subscription.DoesNotExist:
+            return Response(
+                {"error": "Подписка не найдена"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+    def get(self, request, pk_a, pk_u):
+        """Проверка, подписан ли user на author."""
+        try:
+            Subscription.objects.get(author=pk_a, subscriber=pk_u)
+            return Response({"isSubscribed": True}, status=status.HTTP_200_OK)
+        except Subscription.DoesNotExist:
+            return Response({"isSubscribed": False}, status=status.HTTP_200_OK)
 
 
 class SubscriptionsByUserView(APIView):
@@ -488,8 +504,9 @@ class SubscriptionsByUserView(APIView):
     def get(self, request, pk):
         """Получение всех подписок определенного пользователя."""
         try:
-            subscriptions = Subscription.objects.filter(subscriber_id=user_id)
-            serializer = SubscriptionSerializer(subscriptions, many=True)
+            subscriptions = Subscription.objects.filter(subscriber=pk)
+            authors = [sub.author for sub in subscriptions]  # Получаем авторов из подписок
+            serializer = UserSerializer(authors, many=True)  # Сериализуем авторов
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Subscription.DoesNotExist:
             return Response({'error': 'Подписки не найдены'}, status=status.HTTP_404_NOT_FOUND)
@@ -501,7 +518,7 @@ class SubscribersByUserView(APIView):
     def get(self, request, pk):
         """Получение всех подписчиков определенного пользователя."""
         try:
-            subscribers = Subscription.objects.filter(author_id=pk)
+            subscribers = Subscription.objects.filter(author=pk)
             serializer = SubscriptionSerializer(subscribers, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Subscription.DoesNotExist:
@@ -510,7 +527,7 @@ class SubscribersByUserView(APIView):
 
 class SubscriptionCountView(APIView):
     def get(self, request):
-        author_id = request.data.get('author_id')
-        subscriber_count = Subscription.objects.filter(author_id=author_id).count()
+        author_id = request.data.get('author')
+        subscriber_count = Subscription.objects.filter(author=author_id).count()
 
         return Response({"author_id": author_id, "subscriber_count": subscriber_count})

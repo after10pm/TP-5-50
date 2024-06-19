@@ -90,9 +90,9 @@ class Comment(models.Model):
 
 class Subscription(models.Model):
     sub_id = models.BigAutoField(primary_key=True)
-    author_id = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE)
-    subscriber_id = models.ForeignKey(User, related_name='subscriber', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE)
+    subscriber = models.ForeignKey(User, related_name='subscriber', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'subscription'
-        unique_together = ('author_id', 'subscriber_id')
+        unique_together = ('author', 'subscriber')
