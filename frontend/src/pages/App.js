@@ -33,7 +33,7 @@ function App() {
 
             async () => {
                 const accessToken = getAccessTokenFromCookies();
-                const response = await fetch('http://localhost:8000/user/', {
+                const response = await fetch('http://79.174.84.116:3000/', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${accessToken}`, // Включение токена доступа в заголовке
