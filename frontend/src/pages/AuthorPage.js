@@ -26,14 +26,25 @@ function AuthorPage(props) {
     }
     const checkMarkRef = useRef();
     const menuRef = useRef();
-    useEffect(() =>{
+    useEffect(() => {
         const checkUserExistence = async () => {
             try {
-                const response = await axios.get(`http://79.174.84.116:8000/users/${userId}/`);
+                const accessToken = getAccessTokenFromCookies(); // Получаем access токен
+
+                if (!accessToken) {
+                    console.error('Access token not found');
+                    return;
+                }
+
+                const response = await axios.get(`http://79.174.84.116:8000/users/${userId}/`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
                 setAuthorUser(response.data);
             } catch (error) {
                 console.error('User not found:', error);
-
                 history('/');
             }
         };
@@ -54,33 +65,58 @@ function AuthorPage(props) {
     useEffect(() => {
         const checkSubscription = async () => {
             try {
-                const response = await axios.get(`http://79.174.84.116:8000/subscriptions/${authorUser.id}/${user.id}/`);
-                const isSubscribed = response.data.isSubscribed;
-                setSubscribed(isSubscribed);
-                console.log(isSubscribed)
+                const accessToken = getAccessTokenFromCookies();
+
+                if (!accessToken) {
+                    console.error('Access token not found');
+                    return;
+                }
+
+                const response = await axios.get(`http://79.174.84.116:8000/subscriptions/${authorUser.id}/${user.id}/`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
+                setSubscribed(response.data.isSubscribed);
+                console.log(response.data.isSubscribed);
             } catch (error) {
                 console.error('Error checking subscription:', error);
             }
         };
 
-        if (authorUser) {
+        if (authorUser && user) {
             checkSubscription();
         }
-    }, [authorUser, user.id]);
+    }, [authorUser, user]);
+
     useEffect(() => {
-        if (authorUser) {
-            let data;
-            const author_id = authorUser.id
-            const response = axios.get(`http://79.174.84.116:8000/posts/${author_id}/`)
-                .then(res => {
-                    data = res.data;
-                    setPosts(data);
-                })
-                .catch(err => {
-                    console.log(err);
+        const fetchData = async () => {
+            const accessToken = getAccessTokenFromCookies();
+
+            if (!accessToken) {
+                console.error('Access token not found');
+                return;
+            }
+
+            try {
+                const user_id = user.id;
+
+                // Запрос для получения постов автора
+                const response = await axios.get(`http://79.174.84.116:8000/posts/${authorUser.id}/`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
                 });
+                setPosts(response.data);
+            } catch (error) {
+                console.error('Request error:', error);
+            }
+        };
+        if (user.id && authorUser.id) {
+            fetchData();
         }
-    }, [user.id, posts, authorUser]);
+    }, [user.id, authorUser.id]);
     const redirectToMyAccount = () => {
         history('/my_profile');
     };
