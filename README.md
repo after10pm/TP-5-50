@@ -3,7 +3,7 @@
 
 # **Студенты:**
 
-[Головлев Гордей](https://github.com/after10pm) - Тимлид, back-end разработчик
+[Головлев Гордей](https://github.com/after10pm) - Тимлид, дизайнер
 
 [Гвоздев Даниил](https://github.com/StudentDaniil) - Back-end разработчик, front-end разработчик, проектировщик системы
 
@@ -51,5 +51,8 @@
 [Видеопрезентация предзащита](https://youtu.be/AeWO6xoKeWs)
 
 [Видеопрезентация защита](https://youtu.be/lV7l_8KEcbg)
+
+# **Ссылка на product версию сайта:**
+[SocialSphere](http://79.174.84.116:3000/)
 
 
