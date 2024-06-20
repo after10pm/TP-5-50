@@ -50,4 +50,6 @@
 
 [Видеопрезентация предзащита](https://youtu.be/AeWO6xoKeWs)
 
+[Видеопрезентация защита](https://youtu.be/lV7l_8KEcbg)
+
 
