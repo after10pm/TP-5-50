@@ -29,7 +29,7 @@ function AuthorPage(props) {
     useEffect(() =>{
         const checkUserExistence = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/users/${userId}/`);
+                const response = await axios.get(`http://79.174.84.116:8000/users/${userId}/`);
                 setAuthorUser(response.data);
             } catch (error) {
                 console.error('User not found:', error);
@@ -54,7 +54,7 @@ function AuthorPage(props) {
     useEffect(() => {
         const checkSubscription = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/subscriptions/${authorUser.id}/${user.id}/`);
+                const response = await axios.get(`http://79.174.84.116:8000/subscriptions/${authorUser.id}/${user.id}/`);
                 const isSubscribed = response.data.isSubscribed;
                 setSubscribed(isSubscribed);
                 console.log(isSubscribed)
@@ -71,7 +71,7 @@ function AuthorPage(props) {
         if (authorUser) {
             let data;
             const author_id = authorUser.id
-            const response = axios.get(`http://localhost:8000/posts/${author_id}/`)
+            const response = axios.get(`http://79.174.84.116:8000/posts/${author_id}/`)
                 .then(res => {
                     data = res.data;
                     setPosts(data);
@@ -90,7 +90,7 @@ function AuthorPage(props) {
     const logout = async () => {
         const accessToken = getAccessTokenFromCookies(); // Access token теперь доступен в функции logout
 
-        await fetch('http://localhost:8000/logout/', {
+        await fetch('http://79.174.84.116:8000/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
