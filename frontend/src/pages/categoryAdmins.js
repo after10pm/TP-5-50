@@ -5,15 +5,15 @@ import LoadingAnimation from "../animaiton/LoadingAnimation";
 import {getAccessTokenFromCookies} from "../components/CookiesUtils";
 
 const CategoryAdmins = (props) => {
-
     const [isLoading, setIsLoading] = useState(true);
+    const [searchResults, setSearchResults] = useState([]);
+    const [newCategory, setNewCategory] = useState('');
     const user = props.user
-
 
     const categories = {
         'А': ['арбуз', 'абрикос', 'атлас', 'анимация', 'ахтунг'],
         'Б': ['блог', 'бензин', 'берлога', 'бактерия', 'бенефит'],
-        'В': ['вагон', 'вакуум', 'вклад', 'вояж', 'валидация']
+        'В': ['вагон', 'вакуум', 'вклад', 'вояж', 'валидация'],
     };
 
     const [state, setState] = useState({
@@ -22,24 +22,24 @@ const CategoryAdmins = (props) => {
         searchResults: {
             'А': categories.А,
             'Б': categories.Б,
-            'В': categories.В
+            'В': categories.В,
         },
-        newCategory: ''
+        newCategory: '',
     });
 
     const handleChangeSearch = (event) => {
         const searchTerm = event.target.value.toLowerCase();
-        const {categories} = state;
+        const { categories } = state;
         const searchResults = {
             'А': categories.А.filter(word => word.toLowerCase().includes(searchTerm)),
             'Б': categories.Б.filter(word => word.toLowerCase().includes(searchTerm)),
-            'В': categories.В.filter(word => word.toLowerCase().includes(searchTerm))
+            'В': categories.В.filter(word => word.toLowerCase().includes(searchTerm)),
         };
-        setState({...state, searchResults});
+        setState({ ...state, searchResults });
     };
 
     const addCategory = () => {
-        const {categories, newCategory} = state;
+        const { categories, newCategory } = state;
         if (newCategory.trim() === '') {
             return;
         }
@@ -50,23 +50,23 @@ const CategoryAdmins = (props) => {
             categories[selectedLetter].push(newCategory);
             setState({
                 categories: categories,
-                allWords: Object.values(categories).flat(), 
+                allWords: Object.values(categories).flat(),
                 searchResults: {
                     'А': categories.А,
                     'Б': categories.Б,
-                    'В': categories.В
+                    'В': categories.В,
                 },
-                newCategory: ''
+                newCategory: '',
             });
         }
     };
 
     const handleChangeNewCategory = (event) => {
-        setState({...state, newCategory: event.target.value});
+        setState({ ...state, newCategory: event.target.value });
     };
 
     const deleteCategory = (letter, word) => {
-        const {categories} = state;
+        const { categories } = state;
         categories[letter] = categories[letter].filter(category => category !== word);
 
         setState({
@@ -75,10 +75,11 @@ const CategoryAdmins = (props) => {
             searchResults: {
                 'А': categories.А,
                 'Б': categories.Б,
-                'В': categories.В
-            }
+                'В': categories.В,
+            },
         });
     };
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false);
@@ -86,9 +87,10 @@ const CategoryAdmins = (props) => {
 
         return () => clearTimeout(timer);
     }, []);
+
     const logout = async () => {
         const accessToken = getAccessTokenFromCookies();
-        await fetch('http://localhost:8000/logout/', {
+        await fetch('http://79.174.84.116:8000/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -96,10 +98,10 @@ const CategoryAdmins = (props) => {
             },
             credentials: 'include',
         });
-        window.location.reload()
-    }
+        window.location.reload();
+    };
 
-    const {searchResults, newCategory} = this.state;
+
 
     if (user === '') {
         if (isLoading) {
@@ -152,7 +154,7 @@ const CategoryAdmins = (props) => {
                     <div className='category-block'></div>
 
 
-                    <input type="text" onChange={this.handleChangeSearch} placeholder="Поиск"
+                    <input type="text" onChange={handleChangeSearch} placeholder="Поиск"
                            className='category-search'/>
 
                     <div className='category-letter'>A</div>

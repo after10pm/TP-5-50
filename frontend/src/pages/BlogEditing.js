@@ -47,7 +47,7 @@ function BlogEditing(props) {
     };
     const logout = async () => {
         const accessToken = getAccessTokenFromCookies();
-        await fetch('http://localhost:8000/logout/', {
+        await fetch('http://79.174.84.116:8000/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ function BlogEditing(props) {
                     return;
                 }
 
-                const response = await axios.get(`http://localhost:8000/posts/${user_id}/`, {
+                const response = await axios.get(`http://79.174.84.116:8000/posts/${user_id}/`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
@@ -114,7 +114,7 @@ function BlogEditing(props) {
                 return;
             }
 
-            const response = await axios.post('http://localhost:8000/posts/', {
+            const response = await axios.post('http://79.174.84.116:8000/posts/', {
                 title: newPost.title,
                 content: newPost.content,
                 user: user.id

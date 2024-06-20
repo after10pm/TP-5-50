@@ -112,7 +112,7 @@ function AuthorPage(props) {
             }
 
             if (subscribed) {
-                await axios.delete(`http://localhost:8000/subscriptions/${authorUser.id}/${user.id}/`, {
+                await axios.delete(`http://79.174.84.116:8000/subscriptions/${authorUser.id}/${user.id}/`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
@@ -121,7 +121,7 @@ function AuthorPage(props) {
             } else {
                 console.log(authorUser.id, user.id);
                 const response = await axios.post(
-                    'http://localhost:8000/subscriptions/',
+                    'http://79.174.84.116:8000/subscriptions/',
                     {
                         author: authorUser.id,
                         subscriber: user.id,
@@ -148,7 +148,7 @@ function AuthorPage(props) {
                 return null;
             }
 
-            const response = await axios.get(`http://localhost:8000/users/${userId}/`, {
+            const response = await axios.get(`http://79.174.84.116:8000/users/${userId}/`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -172,7 +172,7 @@ function AuthorPage(props) {
                 }
 
                 const [detailsResponse, authorResponse] = await Promise.all([
-                    axios.get('http://localhost:8000/users/', {
+                    axios.get('http://79.174.84.116:8000/users/', {
                         headers: {
                             Authorization: `Bearer ${accessToken}`,
                         },

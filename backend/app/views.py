@@ -47,7 +47,7 @@ class UsersViewDetail(APIView):
         Изменение пользователя по id.
         """
         action = request.data.get('action')
-        user = User.objects.get(id=id)
+        user = User.objects.get(id=pk)
 
         if action == 'block':
             user.is_blocked = True

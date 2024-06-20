@@ -42,7 +42,7 @@ function PersonalAccount(props) {
     const handleUnsubscribe = async (userId) => {
         const accessToken = getAccessTokenFromCookies();
         try {
-            await axios.delete(`http://localhost:8000/subscriptions/${userId}/`, {
+            await axios.delete(`http://79.174.84.116:8000/subscriptions/${userId}/`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -65,7 +65,7 @@ function PersonalAccount(props) {
     const logout = async () => {
         const accessToken = getAccessTokenFromCookies();
         try {
-            await fetch('http://localhost:8000/logout/', {
+            await fetch('http://79.174.84.116:8000/logout/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ function PersonalAccount(props) {
             history('/blogEditing');
         } else {
             try {
-                const response = await fetch(`http://localhost:8000/user/${user.id}/`, {
+                const response = await fetch(`http://79.174.84.116:8000/user/${user.id}/`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ function PersonalAccount(props) {
                     return;
                 }
                 const subscriber_id = user.id;
-                const response = await axios.get(`http://localhost:8000/subscriptionsByUser/${subscriber_id}/`, {
+                const response = await axios.get(`http://79.174.84.116:8000/subscriptionsByUser/${subscriber_id}/`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },

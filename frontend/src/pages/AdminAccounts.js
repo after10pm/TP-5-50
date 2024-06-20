@@ -14,21 +14,27 @@ function AdminAccounts(props) {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:8000/users/');
+            const accessToken = getAccessTokenFromCookies();
+            const response = await fetch('http://79.174.84.116:8000/users/', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+                credentials: 'include',
+            });
             if (!response.ok) {
                 throw new Error('Ошибка при получении данных');
             }
             const data = await response.json();
-
-            setDetails(data)
-
+            setDetails(data);
         } catch (error) {
             console.error('Ошибка при получении пользователей:', error);
         }
     };
+
     const logout = async () => {
         const accessToken = getAccessTokenFromCookies();
-        await fetch('http://localhost:8000/logout/', {
+        await fetch('http://79.174.84.116:8000/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -52,11 +58,17 @@ function AdminAccounts(props) {
     const handleBlockUser = (index) => {
         const user = details[index];
         if (!user.is_blocked) {
-            axios.put(`http://localhost:8000/users/change/${user.id}/`, {action: 'block'})
+            const accessToken = getAccessTokenFromCookies();
+            axios.put(`http://79.174.84.116:8000/users/${user.id}/`, { action: 'block' }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                }
+            })
                 .then(response => {
                     const updatedDetails = details.map((user, i) => {
                         if (i === index) {
-                            return {...user, is_blocked: true};
+                            return { ...user, is_blocked: true };
                         }
                         return user;
                     });
@@ -68,13 +80,20 @@ function AdminAccounts(props) {
         }
     };
 
+
     const handleUnblockUser = (index) => {
         const user = details[index];
-        axios.put(`http://localhost:8000/users/change/${user.id}/`, {action: 'unblock'})
+        const accessToken = getAccessTokenFromCookies(); // Assuming you have a function to get the access token from cookies
+        axios.put(`http://79.174.84.116:8000/users/${user.id}/`, { action: 'unblock' }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+            }
+        })
             .then(response => {
                 const updatedDetails = details.map((item, i) => {
                     if (i === index) {
-                        return {...item, is_blocked: false};
+                        return { ...item, is_blocked: false };
                     }
                     return item;
                 });
@@ -85,12 +104,19 @@ function AdminAccounts(props) {
             });
     };
 
+
     const handleDeleteUser = (index) => {
         const userToDelete = details[index];
         const confirmDelete = window.confirm(`Вы уверены, что хотите удалить пользователя "${userToDelete.name}"?`);
 
         if (confirmDelete) {
-            axios.delete(`http://localhost:8000/api/users/delete/${userToDelete.id}/`)
+            const accessToken = getAccessTokenFromCookies(); // Assuming you have a function to get the access token from cookies
+            axios.delete(`http://79.174.84.116:8000/users/${userToDelete.id}/`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                }
+            })
                 .then(response => {
                     const filteredDetails = details.filter((user, i) => i !== index);
                     setDetails(filteredDetails);
@@ -100,6 +126,7 @@ function AdminAccounts(props) {
                 });
         }
     };
+
 
     const handleChangeSearch = (event) => {
         setSearchText(event.target.value);
