@@ -99,24 +99,28 @@ function AuthorPage(props) {
                 return;
             }
 
-            try {
-                const user_id = user.id;
+            if (authorUser) {
+                try {
+                    const author_id = authorUser.id;
 
-                // Запрос для получения постов автора
-                const response = await axios.get(`http://79.174.84.116:8000/subscriptions/${authorUser?.id}/${user.id}/`, {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                });
-                setPosts(response.data);
-            } catch (error) {
-                console.error('Request error:', error);
+                    // Запрос для получения постов автора
+                    const response = await axios.get(`http://79.174.84.116:8000/posts/${author_id}/`, {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+
+                    setPosts(response.data);
+                } catch (error) {
+                    console.error('Request error:', error);
+                }
             }
         };
-        if (user.id && authorUser.id) {
+
+        if (user.id) {
             fetchData();
         }
-    }, [user.id, authorUser.id]);
+    }, [user.id]);
     const redirectToMyAccount = () => {
         history('/my_profile');
     };
@@ -189,7 +193,7 @@ function AuthorPage(props) {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-
+            console.log(response.data)
             return response.data;
         } catch (error) {
             console.error('Request error:', error);
