@@ -103,7 +103,7 @@ function AuthorPage(props) {
                 const user_id = user.id;
 
                 // Запрос для получения постов автора
-                const response = await axios.get(`http://79.174.84.116:8000/posts/${authorUser.id}/`, {
+                const response = await axios.get(`http://79.174.84.116:8000/subscriptions/${authorUser?.id}/${user.id}/`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
@@ -148,7 +148,7 @@ function AuthorPage(props) {
             }
 
             if (subscribed) {
-                await axios.delete(`http://79.174.84.116:8000/subscriptions/${authorUser.id}/${user.id}/`, {
+                await axios.delete(`http://79.174.84.116:8000/subscriptions/${authorUser?.id}/${user.id}/`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
