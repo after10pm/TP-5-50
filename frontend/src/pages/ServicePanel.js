@@ -11,7 +11,7 @@ function ServicePanel(props) {
 
     const logout = async () => {
         const accessToken = getAccessTokenFromCookies();
-        await fetch('http://localhost:8000/logout/', {
+        await fetch('http://79.174.84.116:8000/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

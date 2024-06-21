@@ -17,6 +17,9 @@ from django.db.models.signals import post_save, post_delete
 
 
 class UsersView(APIView):
+    """
+        Получение всех пользователей.
+    """
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -47,7 +50,7 @@ class UsersViewDetail(APIView):
         Изменение пользователя по id.
         """
         action = request.data.get('action')
-        user = User.objects.get(id=id)
+        user = User.objects.get(id=pk)
 
         if action == 'block':
             user.is_blocked = True
@@ -147,6 +150,8 @@ class UserView(APIView):
 
 
 class UserViewDetail(APIView):
+    permission_classes = [IsAuthenticated]
+
     def put(self, request, pk):
         """
         Изменение статуса пользователя (становление автором) пользователя по id.
@@ -164,7 +169,6 @@ class UserViewDetail(APIView):
 
 class LogoutView(APIView):
     """Выход из аккаунта"""
-    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         response = Response()
@@ -318,6 +322,7 @@ class CategoryUserView(APIView):
 
 class CategoryUserViewDetail(APIView):
     """Получение списка пользователей для заданной категории."""
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         """Получение списка пользователей для заданной категории."""

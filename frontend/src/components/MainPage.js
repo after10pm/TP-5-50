@@ -7,7 +7,7 @@ import Register from "../pages/Register";
 
 function MainPage () {
     const logout = async () => {
-        await fetch('http://localhost:8000/logout', {
+        await fetch('http://79.174.84.116:8000/logout', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',

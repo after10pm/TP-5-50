@@ -1,16 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import '../components/Register.css';
 import {NavLink} from "react-router-dom";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import axios from "axios";
-import alert from "bootstrap/js/src/alert";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 
 import {useNavigate} from 'react-router-dom';
 import {SyntheticEvent} from "react";
-import {DemoContainer} from "@mui/x-date-pickers/internals/demo";
+import {DateCalendar} from "@mui/x-date-pickers";
 
 
 function Register() {
@@ -19,15 +16,38 @@ function Register() {
     const [isDatePickerShown, setIsDatePickerShown] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [redirectTo, setRedirect] = useState(false);
+    const dateCalendarRef = useRef(null);
 
-
-    const toggleDatePicker = () => {
+    const toggleDatePicker = (event) => {
+        event.stopPropagation();
         setIsDatePickerShown(!isDatePickerShown);
     };
 
-    const handleDateChange = date => {
-        setSelectedDate(date);
+
+    const handleDateChange = (newValue) => {
+        setSelectedDate(newValue);
     };
+    useEffect(() => {
+        console.log(isDatePickerShown);
+    }, [isDatePickerShown]);
+
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                dateCalendarRef.current &&
+                !dateCalendarRef.current.contains(event.target) &&
+                event.target.id !== 'datepicker'
+            ) {
+                setIsDatePickerShown(false);
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
 
     const submit = async (e: SyntheticEvent) => {
@@ -47,13 +67,10 @@ function Register() {
             return;
         }
         const formatDate = (date) => {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
+            return date ? date.toISOString().split('T')[0] : null;
         };
         const formattedDate = selectedDate ? formatDate(selectedDate) : null;
-        const response = await fetch('http://localhost:8000/register/', {
+        const response = await fetch('http://79.174.84.116:8000/register/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -84,9 +101,15 @@ function Register() {
             <input type="text" id="email" name="email" placeholder="Email" className='text-form'/>
             <input type="text" id="name" name="name" placeholder="Никнейм" className='text-form'
                    style={{position: 'absolute', top: '390px'}}/>
-            <input type="text" id="datepicker" name="date" placeholder="Дата рождения" className='text-form'
-                   style={{position: 'absolute', top: '480px'}}
-                   value={selectedDate ? selectedDate.toLocaleDateString('ru-RU') : ''}/>
+            <input
+                type="text"
+                id="datepicker"
+                name="date"
+                placeholder="Дата рождения"
+                className='text-form'
+                style={{position: 'absolute', top: '480px'}}
+                value={selectedDate ? selectedDate.format('DD.MM.YYYY') : ''}
+            />
 
 
             <input type="password" id="password" name="password" placeholder="Пароль" className='text-form'
@@ -97,15 +120,15 @@ function Register() {
 
             <input type="checkbox" id="agreeCheckBox" className='mark-reg-2'/>
 
-            <div className='check-mark' onClick={toggleDatePicker} style={{left: '1116.5px'}}/>
+            <div className='check-mark' onClick={(event) => toggleDatePicker(event)} style={{left: '1116.5px'}}/>
+
             {isDatePickerShown && (
-                <div className='date-picker-container'>
+                <div className="date-picker-container" ref={dateCalendarRef}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            selected={selectedDate}
+                        <DateCalendar
+                            value={selectedDate}
                             onChange={handleDateChange}
-                            inline
-                            dateFormat="dd/MM/yyyy"
+                            dayOfWeekFormatter={(weekday) => `${weekday.format('dd')}.`}
                         />
                     </LocalizationProvider>
                 </div>

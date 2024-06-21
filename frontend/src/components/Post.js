@@ -22,7 +22,7 @@ function Post(props) {
             }
 
             try {
-                await axios.delete(`http://localhost:8000/posts/${postId}/`, { // Удаляем пост на сервере
+                await axios.delete(`http://79.174.84.116:8000/posts/${postId}/`, { // Удаляем пост на сервере
                     headers: {
                         Authorization: `Bearer ${accessToken}`, // Добавьте Authorization header
                     }
@@ -43,7 +43,7 @@ function Post(props) {
         }
 
         try {
-            const response = await axios.put(`http://localhost:8000/posts/${postId}/`, {
+            const response = await axios.put(`http://79.174.84.116:8000/posts/${postId}/`, {
                 content: editedText,
             }, {
                 headers: {

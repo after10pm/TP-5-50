@@ -26,14 +26,25 @@ function AuthorPage(props) {
     }
     const checkMarkRef = useRef();
     const menuRef = useRef();
-    useEffect(() =>{
+    useEffect(() => {
         const checkUserExistence = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/users/${userId}/`);
+                const accessToken = getAccessTokenFromCookies(); // Получаем access токен
+
+                if (!accessToken) {
+                    console.error('Access token not found');
+                    return;
+                }
+
+                const response = await axios.get(`http://79.174.84.116:8000/users/${userId}/`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
                 setAuthorUser(response.data);
             } catch (error) {
                 console.error('User not found:', error);
-
                 history('/');
             }
         };
@@ -54,33 +65,62 @@ function AuthorPage(props) {
     useEffect(() => {
         const checkSubscription = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/subscriptions/${authorUser.id}/${user.id}/`);
-                const isSubscribed = response.data.isSubscribed;
-                setSubscribed(isSubscribed);
-                console.log(isSubscribed)
+                const accessToken = getAccessTokenFromCookies();
+
+                if (!accessToken) {
+                    console.error('Access token not found');
+                    return;
+                }
+
+                const response = await axios.get(`http://79.174.84.116:8000/subscriptions/${authorUser.id}/${user.id}/`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
+                setSubscribed(response.data.isSubscribed);
+                console.log(response.data.isSubscribed);
             } catch (error) {
                 console.error('Error checking subscription:', error);
             }
         };
 
-        if (authorUser) {
+        if (authorUser && user) {
             checkSubscription();
         }
-    }, [authorUser, user.id]);
+    }, [authorUser, user]);
+
     useEffect(() => {
-        if (authorUser) {
-            let data;
-            const author_id = authorUser.id
-            const response = axios.get(`http://localhost:8000/posts/${author_id}/`)
-                .then(res => {
-                    data = res.data;
-                    setPosts(data);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+        const fetchData = async () => {
+            const accessToken = getAccessTokenFromCookies();
+
+            if (!accessToken) {
+                console.error('Access token not found');
+                return;
+            }
+
+            if (authorUser) {
+                try {
+                    const author_id = authorUser.id;
+
+                    // Запрос для получения постов автора
+                    const response = await axios.get(`http://79.174.84.116:8000/posts/${author_id}/`, {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+
+                    setPosts(response.data);
+                } catch (error) {
+                    console.error('Request error:', error);
+                }
+            }
+        };
+
+        if (user.id) {
+            fetchData();
         }
-    }, [user.id, posts, authorUser]);
+    }, [user.id]);
     const redirectToMyAccount = () => {
         history('/my_profile');
     };
@@ -90,7 +130,7 @@ function AuthorPage(props) {
     const logout = async () => {
         const accessToken = getAccessTokenFromCookies(); // Access token теперь доступен в функции logout
 
-        await fetch('http://localhost:8000/logout/', {
+        await fetch('http://79.174.84.116:8000/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -112,7 +152,7 @@ function AuthorPage(props) {
             }
 
             if (subscribed) {
-                await axios.delete(`http://localhost:8000/subscriptions/${authorUser.id}/${user.id}/`, {
+                await axios.delete(`http://79.174.84.116:8000/subscriptions/${authorUser?.id}/${user.id}/`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
@@ -121,7 +161,7 @@ function AuthorPage(props) {
             } else {
                 console.log(authorUser.id, user.id);
                 const response = await axios.post(
-                    'http://localhost:8000/subscriptions/',
+                    'http://79.174.84.116:8000/subscriptions/',
                     {
                         author: authorUser.id,
                         subscriber: user.id,
@@ -148,12 +188,12 @@ function AuthorPage(props) {
                 return null;
             }
 
-            const response = await axios.get(`http://localhost:8000/users/${userId}/`, {
+            const response = await axios.get(`http://79.174.84.116:8000/users/${userId}/`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-
+            console.log(response.data)
             return response.data;
         } catch (error) {
             console.error('Request error:', error);
@@ -172,7 +212,7 @@ function AuthorPage(props) {
                 }
 
                 const [detailsResponse, authorResponse] = await Promise.all([
-                    axios.get('http://localhost:8000/users/', {
+                    axios.get('http://79.174.84.116:8000/users/', {
                         headers: {
                             Authorization: `Bearer ${accessToken}`,
                         },
