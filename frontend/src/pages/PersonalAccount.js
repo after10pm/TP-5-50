@@ -92,11 +92,13 @@ function PersonalAccount(props) {
         if (isAuthor) {
             history('/blogEditing');
         } else {
+            const accessToken = getAccessTokenFromCookies();
             try {
                 const response = await fetch(`http://79.174.84.116:8000/user/${user.id}/`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
+                        Authorization: `Bearer ${accessToken}`
                     },
                 });
                 window.location.reload();

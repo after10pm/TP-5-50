@@ -111,16 +111,17 @@ function AuthorPage(props) {
                     });
 
                     setPosts(response.data);
+                    console.log(posts)
                 } catch (error) {
                     console.error('Request error:', error);
                 }
             }
         };
 
-        if (user.id) {
+        if (user.id, posts) {
             fetchData();
         }
-    }, [user.id]);
+    }, [user.id, posts]);
     const redirectToMyAccount = () => {
         history('/my_profile');
     };
